@@ -3,6 +3,7 @@ package com.example.khoa1.myapplication;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -19,6 +20,10 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_tai_khoan);
+        //Set back toolbar button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         setTitle("Chi tiết tài khoản");
         lvThuChi = (ListView) findViewById(R.id.lvThuChi);
 //        lvChiTieu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -64,5 +69,18 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
 
         ChiTieuAdapter chiTieuAdapter = new ChiTieuAdapter(this, R.layout.chitieu_listview, arrChiTieu);
         lvThuChi.setAdapter(chiTieuAdapter);
+    }
+
+
+
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+
+        if(id == android.R.id.home)
+        {
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

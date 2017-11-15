@@ -3,6 +3,7 @@ package com.example.khoa1.myapplication;
 import android.content.Intent;
 import android.icu.text.IDNA;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.ContextMenu;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
  */
 public class ChiTieuFragment extends Fragment {
     private ListView lvChiTieu;
+    private FloatingActionButton fabChiTieu;
     public ChiTieuFragment() {
     }
 
@@ -38,6 +40,16 @@ public class ChiTieuFragment extends Fragment {
         lvChiTieu = (ListView) rootView.findViewById(R.id.lvChiTieu);
         lvChiTieu.setOnItemClickListener(new ListViewOnItemClickListener());
         registerForContextMenu(lvChiTieu);
+
+
+        fabChiTieu = (FloatingActionButton) rootView.findViewById(R.id.fabChiTieu);
+        fabChiTieu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity().getApplicationContext(),ThemHoatDong.class);
+                startActivity(intent);
+            }
+        });
         Category anUong = new Category(1, "Ăn Uống", ContextCompat.getDrawable(getContext(), R.drawable.anuong));
         Category muaSam = new Category(2, "Mua Sắm", ContextCompat.getDrawable(getContext(), R.drawable.muasam));
         ArrayList<ChiTieu> arrChiTieu = new ArrayList<ChiTieu>();
