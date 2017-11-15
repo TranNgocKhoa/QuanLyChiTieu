@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?android:selectableItemBackground"
+    >
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:id="@+id/imgChiTieuType"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="center"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="50dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvChiTieuName"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:text="Tài khoản ngân hàng"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_weight="4"/>
+            <TextView
+                android:id="@+id/tvSoTien"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:text="Số dư: 1.700.000đ"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#9E9E9E"
+                android:layout_weight="3"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

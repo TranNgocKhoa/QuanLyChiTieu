@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.khoa1.myapplication.ChinhSuaTaiKhoan">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/headerChiTiet"
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+            <ImageView
+                android:id="@+id/imgDetail"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/acc_background"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:id="@+id/tvLoaiTK"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Loại tài khoản:"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColorHighlight="#1A237E"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#E3F2FD"
+                android:layout_marginLeft="10dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerLoaiTk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvLoaiTK"
+                android:scrollbarSize="20sp"
+                >
+            </Spinner>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:backgroundTint="@color/colorSecondary"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp">
+                <TextView
+                    android:id="@+id/tvAccountTypeProperty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dùng để thanh toán không cần tiền mặt"
+                    android:textSize="16sp"
+                    />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            >
+            <EditText
+                android:id="@+id/editTextTenTk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tài khoản Agribank"
+                android:textColor="#FF3D00"
+                android:layout_marginLeft="20dp"
+                android:textSize="30sp"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:padding="10dp"
+            android:background="#F5F5F5">
+            <LinearLayout
+                android:id="@+id/groupSoDu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Số dư:"
+                    android:textSize="20sp"/>
+                <EditText
+                    android:id="@+id/editTextBalance"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="20sp"
+                    android:gravity="right"
+                    android:text="20.000.000,0"
+                /></LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/groupSoDu"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Số nợ:"
+                    android:textSize="20sp"/>
+                <EditText
+                    android:id="@+id/editTextDebit"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="20sp"
+                    android:gravity="right"
+                    android:text="0,0"
+                    /></LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/btnLuuAccount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Lưu"
+                android:background="#26A69A"
+                />
+
+            <Button
+                android:id="@+id/btnHuyAccount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#E0E0E0"
+                android:text="Huỷ"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

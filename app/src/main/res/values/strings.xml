@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">TiniOne</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string-array name="navigation_drawer_items_array">
+        <item>Tổng Quan</item>
+        <item>Tài Khoản</item>
+        <item>Thu Nhập</item>
+        <item>Chi Tiêu</item>
+        <item>Thống kê</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
