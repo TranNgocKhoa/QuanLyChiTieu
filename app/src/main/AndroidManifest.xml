@@ -19,9 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ChiTietHoatDong"/>
+        <activity android:name=".ChiTietHoatDong" />
         <activity android:name=".ChinhSuaHoatDong" />
-        <activity android:name=".ChinhSuaTaiKhoan"></activity>
+        <activity android:name=".ChinhSuaTaiKhoan" />
+        <activity android:name=".ChiTietTaiKhoan"></activity>
     </application>
 
 </manifest>

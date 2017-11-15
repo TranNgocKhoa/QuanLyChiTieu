@@ -38,7 +38,7 @@ public class AccountFragment extends Fragment {
         lvAccount.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity().getApplicationContext(),ChinhSuaTaiKhoan.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(),ChiTietTaiKhoan.class);
                 startActivity(intent);
             }
         });

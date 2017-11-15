@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEEE"
+    tools:context="com.example.khoa1.myapplication.ChiTietTaiKhoan">
+    <RelativeLayout
+        android:id="@+id/headerChiTietTk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:paddingTop="10dp"
+
+        android:background="@drawable/customborder">
+        <TextView
+            android:id="@+id/tvOverview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tổng quan:"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:background="@drawable/custom_textview_bottom_border"/>
+        <LinearLayout
+            android:id="@+id/groupSoDu"
+            android:layout_below="@id/tvOverview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Số dư:"
+                android:textColor="#1B5E20"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/editTextBalance"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="20dp"
+                android:textSize="20sp"
+                android:gravity="right"
+                android:text="20.000.000,0"
+                /></LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/groupSoDu"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Số nợ:"
+                android:textColor="#DD2C00"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/editTextDebit"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="20dp"
+                android:textSize="20sp"
+                android:gravity="right"
+                android:text="0,0"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+<LinearLayout
+    android:layout_below="@id/headerChiTietTk"
+    android:layout_marginTop="5dp"
+    android:background="#FAFAFA"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hôm nay:"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:background="@drawable/custom_textview_bottom_border"/>
+    <ListView
+        android:id="@+id/lvThuChi"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    </ListView>
+</LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabChiTieu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        app:srcCompat="@android:drawable/ic_input_add" />
+</RelativeLayout>
