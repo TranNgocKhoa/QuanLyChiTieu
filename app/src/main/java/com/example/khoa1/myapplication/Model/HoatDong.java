@@ -3,7 +3,7 @@ package com.example.khoa1.myapplication.Model;
 /**
  * Created by khoa1 on 11/8/2017.
  */
-
+//Test commit khoa branch
 public abstract class HoatDong {
     public HoatDong(int maHoatDong, int soTien, Category category, String tieuDe, String noiDung, Account taiKhoan) {
         this.maHoatDong = maHoatDong;
