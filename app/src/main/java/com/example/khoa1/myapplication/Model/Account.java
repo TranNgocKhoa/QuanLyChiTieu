@@ -10,6 +10,7 @@ public class Account {
     private int balance;
     private int debit;
     private AccountType accountType;
+    private byte[] picture;
 
     public Account(int id, String name, int balance, int debit, AccountType accountType) {
         this.id = id;
