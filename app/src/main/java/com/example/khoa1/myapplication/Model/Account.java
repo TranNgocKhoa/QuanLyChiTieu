@@ -12,12 +12,21 @@ public class Account {
     private AccountType accountType;
     private byte[] picture;
 
-    public Account(int id, String name, int balance, int debit, AccountType accountType) {
+    public Account(int id, String name, int balance, int debit,byte[] picture, AccountType accountType) {
         this.id = id;
         this.name = name;
         this.balance = balance;
         this.debit = debit;
         this.accountType = accountType;
+        this.picture=picture;
+    }
+
+    public byte[] getPicture() {
+        return picture;
+    }
+
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
     }
 
     public int getId() {
