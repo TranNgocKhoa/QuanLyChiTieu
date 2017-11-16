@@ -1,6 +1,8 @@
 package com.example.khoa1.myapplication.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +50,6 @@ public class AccountAdapter extends ArrayAdapter<Account> {
         Account account = arrAccount.get(position);
         if(position%2==0)
             convertView.setBackgroundResource(R.color.colorSecondaryLight);
-        viewHolder.imgAccountType.setImageDrawable(account.getAccountType().getImage());
         viewHolder.tvAccountName.setText(account.getName());
         StringBuilder str = new StringBuilder();
         str.append("Số dư: ");
@@ -58,7 +59,10 @@ public class AccountAdapter extends ArrayAdapter<Account> {
         str.append("Số nợ: ");
         str.append(account.getDebit());
         viewHolder.tvDebit.setText(str.toString());
-
+        if (account.getPicture()!=null){
+            Bitmap bitmap= BitmapFactory.decodeByteArray(account.getPicture(), 0, account.getPicture().length);
+            viewHolder.imgAccountType.setImageBitmap(bitmap);}
+        else viewHolder.imgAccountType.setImageResource(R.drawable.nophoto);
         return convertView;
     }
 
@@ -68,5 +72,3 @@ public class AccountAdapter extends ArrayAdapter<Account> {
     }
 
 }
-
-
