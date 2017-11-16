@@ -16,16 +16,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="0đ"
-        android:textSize="25sp"
+        android:textSize="30sp"
         android:textColor="#2962FF"
-        android:textStyle="bold"
         android:padding="10dp"
         android:background="@drawable/custom_textview_bottom_border"/>
     <RelativeLayout
         android:layout_below="@id/headerChiTietTk"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/custom_textview_bottom_border"
         android:orientation="horizontal">
         <ImageView
@@ -48,7 +47,7 @@
         android:layout_below="@id/headerChiTietTk"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/custom_textview_bottom_border"
         android:orientation="horizontal">
         <ImageView
@@ -71,7 +70,7 @@
         android:layout_below="@id/headerChiTietTk"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/custom_textview_bottom_border"
         android:orientation="horizontal">
 
@@ -96,7 +95,7 @@
         android:layout_below="@id/headerChiTietTk"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/custom_textview_bottom_border"
         android:orientation="horizontal">
 
@@ -113,7 +112,7 @@
         android:layout_below="@id/headerChiTietTk"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/custom_textview_bottom_border"
         android:orientation="horizontal">
         <EditText
@@ -122,6 +121,7 @@
             android:textSize="16sp"
             android:background="@drawable/custom_textview_bottom_border"
             android:gravity="left"
+            android:padding="10dp"
             android:lines="5"/>
     </RelativeLayout>
 
@@ -129,7 +129,7 @@
         android:layout_below="@id/headerChiTietTk"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageButton
             android:layout_width="wrap_content"
