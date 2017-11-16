@@ -6,17 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.khoa1.myapplication.ThemHoatDong">
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_below="@id/toolbar">
-    <TextView
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="0đ"
-        android:textSize="30sp"
+        android:inputType="number"
+        android:hint="0"
+        android:textSize="35sp"
         android:textColor="#2962FF"
         android:padding="10dp"
         android:background="@drawable/custom_textview_bottom_border"/>
@@ -56,16 +59,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/note_icon"/>
-        <TextView
+        <EditText
             android:layout_toRightOf="@id/imageIconTieuDe"
             android:layout_centerInParent="true"
             android:layout_marginLeft="20dp"
             android:padding="0dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="4"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            android:text="Tiêu Đề"/>
+            android:background="@android:color/transparent"
+            android:hint="Tiêu Đề"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_below="@id/headerChiTietTk"
@@ -119,10 +123,11 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:background="@drawable/custom_textview_bottom_border"
             android:gravity="left"
             android:padding="10dp"
+            android:hint="Nội dung"
             android:lines="5"/>
     </RelativeLayout>
 
@@ -139,12 +144,6 @@
             android:src="@drawable/camera_icon"
 />
     </RelativeLayout>
-
-
-
-
-
-
-
 </LinearLayout>
+</ScrollView>
 </RelativeLayout>
