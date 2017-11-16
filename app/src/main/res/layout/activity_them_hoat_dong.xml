@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/activity_icon"/>
         <TextView
+            android:id="@+id/tvChonLoaiHoatDong"
             android:layout_toRightOf="@id/imageIconLoai"
             android:layout_centerInParent="true"
             android:layout_marginLeft="20dp"
