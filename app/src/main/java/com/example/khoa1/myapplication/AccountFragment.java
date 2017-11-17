@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -53,7 +54,7 @@ public class AccountFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(),ChinhSuaTaiKhoan.class);
                 intent.putExtra("Them", true);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
         //  ArrayList<Account> arrAccount = new ArrayList<Account>();
@@ -108,6 +109,13 @@ public class AccountFragment extends Fragment {
             }
         });
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        getListaccount();
+        AccountAdapter accountAdaper = new AccountAdapter(getActivity(), R.layout.account_listview, listAccount);
+        lvAccount.setAdapter(accountAdaper);
     }
     private void createDB() {
         // khởi tạo database
