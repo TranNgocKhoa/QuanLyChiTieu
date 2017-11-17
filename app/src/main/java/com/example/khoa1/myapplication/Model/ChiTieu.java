@@ -5,14 +5,13 @@ package com.example.khoa1.myapplication.Model;
  */
 
 public class ChiTieu extends HoatDong{
-    public ChiTieu(int maHoatDong, int soTien, Category category, String tieuDe, String noiDung,
-                   DanhGia danhGia, Account taiKhoan)
-    {
+
+    private DanhGia danhGia;
+
+    public ChiTieu(int maHoatDong, int soTien, Category category, String tieuDe, String noiDung, Account taiKhoan, DanhGia danhGia) {
         super(maHoatDong, soTien, category, tieuDe, noiDung, taiKhoan);
         this.danhGia = danhGia;
     }
-
-    private DanhGia danhGia;
 
     public DanhGia getDanhGia() {
         return danhGia;

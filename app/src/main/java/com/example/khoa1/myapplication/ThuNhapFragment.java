@@ -31,8 +31,8 @@ public class ThuNhapFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_thunhap, container, false);
         lvThuNhap = (ListView) rootView.findViewById(R.id.lvThuNhap);
 
-        Category luong = new Category(1, "Lương", ContextCompat.getDrawable(getContext(), R.drawable.luong));
-        Category tienvay = new Category(2, "Lấy lại tiền vay", ContextCompat.getDrawable(getContext(), R.drawable.tienvay));
+        Category luong = new Category(1, "Lương", R.drawable.luong);
+        Category tienvay = new Category(2, "Lấy lại tiền vay", R.drawable.tienvay);
         ArrayList<ThuNhap> arrThuNhap = new ArrayList<ThuNhap>();
 
         ThuNhap ct1 = new ThuNhap(1,

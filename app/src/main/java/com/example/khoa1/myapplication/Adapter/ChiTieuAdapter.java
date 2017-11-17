@@ -49,9 +49,9 @@ public class ChiTieuAdapter extends ArrayAdapter<ChiTieu> {
         ChiTieu chitieu = arrChiTieu.get(position);
         if(position%2==0)
             convertView.setBackgroundResource(R.color.colorSecondaryLight);
-        viewHolder.imgChiTieuType.setImageDrawable(chitieu.getCategory().getImage());
+        viewHolder.imgChiTieuType.setImageResource(chitieu.getCategory().getImage());
         viewHolder.tvChiTieuName.setText(chitieu.getTieuDe());
-        viewHolder.tvSoTien.setText(Integer.toString(chitieu.getSoTien()));
+        viewHolder.tvSoTien.setText(Double.toString(chitieu.getSoTien()));
         return convertView;
     }
 

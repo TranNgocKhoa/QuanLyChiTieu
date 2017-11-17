@@ -8,7 +8,7 @@ import android.graphics.drawable.Drawable;
 
 public class Category {
 
-    public Category(int maLoai, String tenLoai, Drawable image) {
+    public Category(int maLoai, String tenLoai, int image) {
         MaLoai = maLoai;
         TenLoai = tenLoai;
         this.image = image;
@@ -19,13 +19,13 @@ public class Category {
 
     private int MaLoai;
     private String TenLoai;
-    Drawable image;
+    int image;
 
-    public Drawable getImage() {
+    public int getImage() {
         return image;
     }
 
-    public void setImage(Drawable image) {
+    public void setImage(int image) {
         this.image = image;
     }
 

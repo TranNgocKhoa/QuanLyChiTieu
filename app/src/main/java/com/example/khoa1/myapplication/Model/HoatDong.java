@@ -5,6 +5,15 @@ package com.example.khoa1.myapplication.Model;
  */
 //Test commit khoa branch
 public abstract class HoatDong {
+
+    private int maHoatDong;
+    private double soTien;
+    private Category category;
+    private String tieuDe;
+    private String noiDung;
+    private Account taiKhoan;
+
+
     public HoatDong(int maHoatDong, int soTien, Category category, String tieuDe, String noiDung, Account taiKhoan) {
         this.maHoatDong = maHoatDong;
         this.soTien = soTien;
@@ -24,7 +33,7 @@ public abstract class HoatDong {
         this.maHoatDong = maHoatDong;
     }
 
-    public int getSoTien() {
+    public double getSoTien() {
         return soTien;
     }
 
@@ -55,13 +64,6 @@ public abstract class HoatDong {
     public void setNoiDung(String noiDung) {
         this.noiDung = noiDung;
     }
-
-    private int maHoatDong;
-    private int soTien;
-    private Category category;
-    private String tieuDe;
-    private String noiDung;
-    private Account taiKhoan;
 
     public Account getTaiKhoan() {
         return taiKhoan;

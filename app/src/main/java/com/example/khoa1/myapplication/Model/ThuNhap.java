@@ -5,7 +5,6 @@ package com.example.khoa1.myapplication.Model;
  */
 
 public class ThuNhap extends HoatDong {
-
     public ThuNhap(int maHoatDong, int soTien, Category category, String tieuDe, String noiDung, Account taiKhoan) {
         super(maHoatDong, soTien, category, tieuDe, noiDung, taiKhoan);
     }

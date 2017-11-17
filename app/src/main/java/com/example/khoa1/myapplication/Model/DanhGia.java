@@ -5,21 +5,42 @@ package com.example.khoa1.myapplication.Model;
  */
 
 public class DanhGia {
-    public DanhGia() {
+    private int maDanhGia;
+    private float longtitude;
+    private float latitude;
+    private int rate;
+    private ChiTieu chiTieu;
+    private String chiTiet;
+
+    public String getChiTiet() {
+        return chiTiet;
     }
 
-    public DanhGia(int maDanhGia, float longtitude, float latitude, int rate) {
+    public void setChiTiet(String chiTiet) {
+        this.chiTiet = chiTiet;
+    }
+
+    public DanhGia(int maDanhGia, float longtitude, float latitude, int rate, ChiTieu chiTieu, String chiTiet) {
 
         this.maDanhGia = maDanhGia;
         this.longtitude = longtitude;
         this.latitude = latitude;
         this.rate = rate;
+        this.chiTieu = chiTieu;
+        this.chiTiet = chiTiet;
     }
 
-    private int maDanhGia;
-    private float longtitude;
-    private float latitude;
-    private int rate;
+    public DanhGia() {
+    }
+
+    public ChiTieu getChiTieu() {
+        return chiTieu;
+    }
+
+    public void setChiTieu(ChiTieu chiTieu) {
+        this.chiTieu = chiTieu;
+    }
+
 
     public int getMaDanhGia() {
         return maDanhGia;

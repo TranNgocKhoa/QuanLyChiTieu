@@ -33,8 +33,8 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
 //            }
 //        });
 
-        Category anUong = new Category(1, "Ăn Uống", ContextCompat.getDrawable(this, R.drawable.anuong));
-        Category muaSam = new Category(2, "Mua Sắm", ContextCompat.getDrawable(this, R.drawable.muasam));
+        Category anUong = new Category(1, "Ăn Uống", R.drawable.anuong);
+        Category muaSam = new Category(2, "Mua Sắm", R.drawable.muasam);
         ArrayList<ChiTieu> arrChiTieu = new ArrayList<ChiTieu>();
 
         ChiTieu ct1 = new ChiTieu(1,
