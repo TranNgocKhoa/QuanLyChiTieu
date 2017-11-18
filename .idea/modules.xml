@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< Updated upstream
-      <module fileurl="file://C:\Users\Tri Nha\Documents\GitHub\QuanLyChiTieu\DrawerActivityEx.iml" filepath="C:\Users\Tri Nha\Documents\GitHub\QuanLyChiTieu\DrawerActivityEx.iml" />
-=======
       <module fileurl="file://$PROJECT_DIR$/QuanLyChiTieu.iml" filepath="$PROJECT_DIR$/QuanLyChiTieu.iml" />
-      <module fileurl="file://C:\Users\Tri Nha\Documents\GitHub\QuanLyChiTieu\QuanLyChiTieu.iml" filepath="C:\Users\Tri Nha\Documents\GitHub\QuanLyChiTieu\QuanLyChiTieu.iml" />
->>>>>>> Stashed changes
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\Tri Nha\Documents\GitHub\QuanLyChiTieu\app\app.iml" filepath="C:\Users\Tri Nha\Documents\GitHub\QuanLyChiTieu\app\app.iml" />
     </modules>
   </component>
 </project>

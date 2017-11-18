@@ -8,12 +8,11 @@ import android.graphics.drawable.Drawable;
 
 public class AccountType {
 
-    public AccountType(int id, String name, String property, Drawable image)
+    public AccountType(int id, String name, String property)
     {
         this.id = id;
         this.name = name;
         this.property = property;
-        this.image = image;
     }
 
     public int getId() {
@@ -40,16 +39,8 @@ public class AccountType {
         this.property = property;
     }
 
-    public Drawable getImage() {
-        return image;
-    }
-
-    public void setImage(Drawable image) {
-        this.image = image;
-    }
 
     int id;
     String name;
     String property;
-    Drawable image;
 }
