@@ -105,6 +105,8 @@ public class AccountFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity().getApplicationContext(),ChiTietTaiKhoan.class);
+                intent.putExtra("Ma Tai Khoan",
+                        ((Account)lvAccount.getItemAtPosition(position)).getMaTaiKhoan());
                 startActivity(intent);
             }
         });
