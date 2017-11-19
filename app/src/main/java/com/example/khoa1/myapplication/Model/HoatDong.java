@@ -1,5 +1,7 @@
 package com.example.khoa1.myapplication.Model;
 
+import java.util.Date;
+
 /**
  * Created by khoa1 on 11/8/2017.
  */
@@ -12,15 +14,17 @@ public abstract class HoatDong {
     private String tieuDe;
     private String noiDung;
     private Account taiKhoan;
+    private Date date;
 
 
-    public HoatDong(int maHoatDong, int soTien, Category category, String tieuDe, String noiDung, Account taiKhoan) {
+    public HoatDong(int maHoatDong, int soTien,Date date, Category category, String tieuDe, String noiDung, Account taiKhoan) {
         this.maHoatDong = maHoatDong;
         this.soTien = soTien;
         this.category = category;
         this.tieuDe = tieuDe;
         this.noiDung = noiDung;
         this.taiKhoan = taiKhoan;
+        this.date = date;
     }
 
     public int getMaHoatDong() {

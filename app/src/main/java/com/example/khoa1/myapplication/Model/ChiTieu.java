@@ -1,5 +1,7 @@
 package com.example.khoa1.myapplication.Model;
 
+import java.util.Date;
+
 /**
  * Created by khoa1 on 11/8/2017.
  */
@@ -8,8 +10,8 @@ public class ChiTieu extends HoatDong{
 
     private DanhGia danhGia;
 
-    public ChiTieu(int maHoatDong, int soTien, Category category, String tieuDe, String noiDung, Account taiKhoan, DanhGia danhGia) {
-        super(maHoatDong, soTien, category, tieuDe, noiDung, taiKhoan);
+    public ChiTieu(int maHoatDong, int soTien, Date date, Category category, String tieuDe, String noiDung, Account taiKhoan, DanhGia danhGia) {
+        super(maHoatDong, soTien,date ,category, tieuDe, noiDung, taiKhoan);
         this.danhGia = danhGia;
     }
 
