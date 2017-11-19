@@ -32,10 +32,10 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
         //Set back toolbar button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         Intent intent = getIntent();
         int id= intent.getIntExtra("Ma Tai Khoan",-1);
         Log.d("ma tai khoan",Integer.toString(id));
+
         setTitle("Chi tiết tài khoản");
         createDB();
         lvThuChi = (ListView) findViewById(R.id.lvThuChi);

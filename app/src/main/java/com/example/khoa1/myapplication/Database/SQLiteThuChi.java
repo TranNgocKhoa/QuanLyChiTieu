@@ -82,7 +82,11 @@ public class SQLiteThuChi extends SQLiteDataController{
             Date date;
             while (cs.moveToNext()) {
 
-                chiTieu = new ChiTieu(cs.getInt(0), cs.getInt(1), null, listLoaiThuChi.get(cs.getInt(3)),cs.getString(4),cs.getString(5),accountsql.);
+                chiTieu = new ChiTieu(cs.getInt(0),
+                        cs.getInt(1),
+                        null, listLoaiThuChi.get(cs.getInt(3)),
+                        cs.getString(4),cs.getString(5),
+                        accountsql.getAccountByID(IDAccount),null);
                 Log.d("aaa",cs.getString(0));
                 listchiTieu.add(chiTieu);
             }
