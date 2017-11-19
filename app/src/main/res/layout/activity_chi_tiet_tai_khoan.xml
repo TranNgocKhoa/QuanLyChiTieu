@@ -41,7 +41,7 @@
                 android:textColor="#1B5E20"
                 android:textSize="20sp"/>
             <TextView
-                android:id="@+id/editTextBalance"
+                android:id="@+id/tvBalance"
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
                 android:textColor="#DD2C00"
                 android:textSize="20sp"/>
             <TextView
-                android:id="@+id/editTextDebit"
+                android:id="@+id/tvDebit"
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="wrap_content"

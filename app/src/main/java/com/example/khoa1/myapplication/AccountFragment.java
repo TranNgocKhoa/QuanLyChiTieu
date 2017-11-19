@@ -52,6 +52,15 @@ public class AccountFragment extends Fragment {
 //        ArrayAdapter<String> arAdp = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, menuitem);
         account = new SQLiteAccount(getContext());
         lvAccount = (ListView) rootView.findViewById(R.id.lv_Account);
+        lvAccount.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity().getApplicationContext(),ChiTietTaiKhoan.class);
+                //Truyen vao ma chi tieu cho Activity Chi Tiet Hoat Dong
+                intent.putExtra("Ma Tai Khoan",((Account)adapterView.getItemAtPosition(i)).getMaTaiKhoan());
+                startActivity(intent);
+            }
+        });
         registerForContextMenu(lvAccount);
         fabThemAccount = (FloatingActionButton) rootView.findViewById(R.id.fabAccount);
         fabThemAccount.setOnClickListener(new View.OnClickListener() {
@@ -73,15 +82,17 @@ public class AccountFragment extends Fragment {
         lvAccount.setAdapter(accountAdaper);
 
         lvAccount.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity().getApplicationContext(),ChiTietTaiKhoan.class);
+                intent.putExtra("Ma Tai Khoan",((Account)parent.getItemAtPosition(position)).getMaTaiKhoan());
                 startActivity(intent);
             }
         });
         return rootView;
     }
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -7,23 +7,41 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.khoa1.myapplication.Adapter.ChiTieuAdapter;
+import com.example.khoa1.myapplication.Adapter.HoatDongAdapter;
+import com.example.khoa1.myapplication.Database.SQLiteAccount;
+import com.example.khoa1.myapplication.Database.SQLiteThuChi;
+import com.example.khoa1.myapplication.Model.Account;
 import com.example.khoa1.myapplication.Model.Category;
 import com.example.khoa1.myapplication.Model.ChiTieu;
+import com.example.khoa1.myapplication.Model.HoatDong;
 
 import java.util.ArrayList;
 
 public class ChiTietTaiKhoan extends AppCompatActivity {
     ListView lvThuChi;
+    TextView tvBalance;
+    TextView tvDebit;
+    SQLiteThuChi sqLiteThuChi;
+    SQLiteAccount sqLiteAccount;
+    int MaTaiKhoan = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_tai_khoan);
+        tvBalance = (TextView) findViewById(R.id.tvBalance);
+        tvDebit = (TextView) findViewById(R.id.tvDebit);
+        sqLiteThuChi = new SQLiteThuChi(this);
+        sqLiteAccount = new SQLiteAccount(this);
         //Set back toolbar button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        MaTaiKhoan = getIntent().getIntExtra("Ma Tai Khoan", 0);
+        Account account = sqLiteAccount.getAccountByID(MaTaiKhoan);
+        tvBalance.setText(String.valueOf(account.getSoTienDu()));
+        tvDebit.setText(String.valueOf(account.getSoTienNo()));
         setTitle("Chi tiết tài khoản");
         lvThuChi = (ListView) findViewById(R.id.lvThuChi);
 //        lvChiTieu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -33,42 +51,12 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
 //            }
 //        });
 
-        Category anUong = new Category(1, "Ăn Uống", R.drawable.anuong);
-        Category muaSam = new Category(2, "Mua Sắm", R.drawable.muasam);
-        ArrayList<ChiTieu> arrChiTieu = new ArrayList<ChiTieu>();
 
-        ChiTieu ct1 = new ChiTieu(1,
-                25000, anUong, "Ăn Phở",
-                "Ăn phở Hùng Lê Văn Việt", null, null);
+        ArrayList<HoatDong> arrHoatDong = new ArrayList<HoatDong>();
+        arrHoatDong = sqLiteThuChi.getListHoatDongByAccountID(MaTaiKhoan);
 
-        ChiTieu ct2 = new ChiTieu(2,
-                26000, anUong, "Ăn Gà Rán",
-                "Ăn gà rán tại Texas Chiken Võ Văn Ngân", null,null);
-
-        ChiTieu ct3 = new ChiTieu(3,
-                26000, anUong, "Uống Trà Sữa",
-                "Uống trà sữa Bobapop ở Lê Văn Việt", null,null);
-
-        ChiTieu ct4 = new ChiTieu(4,
-                27000, anUong, "Uống Cafe",
-                "Uống cafe Napoli", null,null);
-
-        ChiTieu ct5 = new ChiTieu(5,
-                270000, muaSam, "Mua Áo Sơ Mi",
-                "Mua áo sơ mi mới ở Yame", null,null);
-        ChiTieu ct6 = new ChiTieu(6,
-                7000, muaSam, "Mua bút bi",
-                "Mua bút bi trong siêu thị", null,null);
-
-        arrChiTieu.add(ct1);
-        arrChiTieu.add(ct5);
-        arrChiTieu.add(ct2);
-        arrChiTieu.add(ct6);
-        arrChiTieu.add(ct3);
-        arrChiTieu.add(ct4);
-
-        ChiTieuAdapter chiTieuAdapter = new ChiTieuAdapter(this, R.layout.chitieu_listview, arrChiTieu);
-        lvThuChi.setAdapter(chiTieuAdapter);
+        HoatDongAdapter hoatDongAdapter = new HoatDongAdapter(this, R.layout.chitieu_listview, arrHoatDong);
+        lvThuChi.setAdapter(hoatDongAdapter);
     }
 
 

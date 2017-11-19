@@ -6,10 +6,10 @@ package com.example.khoa1.myapplication.Model;
 
 public class DanhGia {
     private int maDanhGia;
+    private byte[] hinhAnh;
     private float longtitude;
     private float latitude;
     private int rate;
-    private ChiTieu chiTieu;
     private String chiTiet;
 
     public String getChiTiet() {
@@ -20,27 +20,26 @@ public class DanhGia {
         this.chiTiet = chiTiet;
     }
 
-    public DanhGia(int maDanhGia, float longtitude, float latitude, int rate, ChiTieu chiTieu, String chiTiet) {
+    public DanhGia(int maDanhGia, byte[] hinhAnh, float longtitude, float latitude, int rate, String chiTiet) {
 
         this.maDanhGia = maDanhGia;
+        this.hinhAnh = hinhAnh;
         this.longtitude = longtitude;
         this.latitude = latitude;
         this.rate = rate;
-        this.chiTieu = chiTieu;
         this.chiTiet = chiTiet;
     }
 
     public DanhGia() {
     }
 
-    public ChiTieu getChiTieu() {
-        return chiTieu;
+    public byte[] getHinhAnh() {
+        return hinhAnh;
     }
 
-    public void setChiTieu(ChiTieu chiTieu) {
-        this.chiTieu = chiTieu;
+    public void setHinhAnh(byte[] hinhAnh) {
+        this.hinhAnh = hinhAnh;
     }
-
 
     public int getMaDanhGia() {
         return maDanhGia;

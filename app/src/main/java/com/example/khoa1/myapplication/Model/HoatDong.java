@@ -1,5 +1,7 @@
 package com.example.khoa1.myapplication.Model;
 
+import java.util.Date;
+
 /**
  * Created by khoa1 on 11/8/2017.
  */
@@ -8,13 +10,26 @@ public abstract class HoatDong {
 
     private int maHoatDong;
     private double soTien;
+    private Date ngay;
     private Category category;
     private String tieuDe;
     private String noiDung;
     private Account taiKhoan;
 
 
-    public HoatDong(int maHoatDong, int soTien, Category category, String tieuDe, String noiDung, Account taiKhoan) {
+    public void setSoTien(double soTien) {
+        this.soTien = soTien;
+    }
+
+    public Date getNgay() {
+        return ngay;
+    }
+
+    public void setNgay(Date ngay) {
+        this.ngay = ngay;
+    }
+
+    public HoatDong(int maHoatDong, double soTien, Date ngay, Category category, String tieuDe, String noiDung, Account taiKhoan) {
         this.maHoatDong = maHoatDong;
         this.soTien = soTien;
         this.category = category;

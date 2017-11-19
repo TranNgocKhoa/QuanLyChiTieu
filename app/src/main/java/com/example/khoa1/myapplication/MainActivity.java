@@ -13,6 +13,10 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.khoa1.myapplication.Database.SQLiteDataController;
+
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     private String[] mNavigationDrawerItemTitles;
@@ -32,7 +36,12 @@ public class MainActivity extends AppCompatActivity {
         mNavigationDrawerItemTitles= getResources().getStringArray(R.array.navigation_drawer_items_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
+        SQLiteDataController sqLiteDataController = new SQLiteDataController(this);
+        try {
+            sqLiteDataController.isCreatedDatabase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         setupToolbar();
 
         DataModel[] drawerItem = new DataModel[5];
