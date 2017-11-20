@@ -28,8 +28,7 @@ public class SQLiteAccount extends SQLiteDataController{
                     ,null);
             Account account;
             while (cs.moveToNext()) {
-
-                account = new Account(cs.getInt(0), cs.getString(1), cs.getInt(2), cs.getInt(3),cs.getBlob(5),null);
+                account = new Account(cs.getInt(0), cs.getString(1), cs.getDouble(2), cs.getDouble(3),cs.getInt(4));
                 Log.d("aaa",cs.getString(0));
                 ListAccount.add(account);
             }
@@ -41,15 +40,48 @@ public class SQLiteAccount extends SQLiteDataController{
 
         return ListAccount;
     }
+
+    public Account getAccountByID(int ID)
+    {
+        Account account = null;
+        try{
+            openDataBase();
+            String sql = "SELECT *\n" +
+                    "FROM TaiKhoan\n"+
+                    "WHERE TaiKhoan.MaTaiKhoan ="+String.valueOf(ID);
+            Cursor cs = database.rawQuery(sql
+                    ,null);
+           // if(cs.moveToFirst())
+            while (cs.moveToNext()) {
+                account = new Account(cs.getInt(0), cs.getString(1), cs.getDouble(2), cs.getDouble(3),cs.getInt(4));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return account;
+    }
+
+    public void DeleteAllAccount(){
+        ArrayList<Account> ListAccount= new ArrayList<Account>();
+
+            openDataBase();
+            Cursor cs = database.rawQuery("Delete from TaiKhoan"
+                    ,null);
+
+    }
+
     public boolean addAccount(Account account){
         boolean result = false;
         try {
 
             openDataBase();
             ContentValues values = new ContentValues();
-            values.put("TenTaiKhoan", account.getName());
-            values.put("SoTienDu", account.getBalance());
-            values.put("SoTienNo", account.getDebit());
+            values.put("TenTaiKhoan", account.getTenTaiKhoan());
+            values.put("SoTienDu", account.getSoTienDu());
+            values.put("SoTienNo", account.getSoTienNo());
             values.put("HinhAnh", account.getPicture());
           //  values.put("SoTienNo", account.getAccountType().getId());
             long rs = database.insert("TaiKhoan", null, values);
@@ -70,12 +102,12 @@ public class SQLiteAccount extends SQLiteDataController{
 
             openDataBase();
             ContentValues values = new ContentValues();
-            values.put("TenTaiKhoan", account.getName());
-            values.put("SoTienDu", account.getBalance());
-            values.put("SoTienNo", account.getDebit());
+            values.put("TenTaiKhoan", account.getTenTaiKhoan());
+            values.put("SoTienDu", account.getSoTienDu());
+            values.put("SoTienNo", account.getSoTienNo());
             values.put("HinhAnh", account.getPicture());
             //values.put("MaLoaiTaiKhoan", account.getAccountType().getId());
-            int rs = database.update("TaiKhoan",values,"MaTaiKhoan="+ account.getId(),null);
+            int rs = database.update("TaiKhoan",values,"MaTaiKhoan="+ account.getMaTaiKhoan(),null);
             if (rs > 0) {
                 result = true;
             }

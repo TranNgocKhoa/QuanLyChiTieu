@@ -2,36 +2,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="@drawable/customborder"
         android:layout_height="0dp"
         android:layout_weight="1">
         <TextView
             android:id="@+id/tvOverview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="Tháng này"
             android:textSize="45sp"
+            android:background="@drawable/custom_textview_bottom_border"
             android:layout_alignParentTop="true"/>
-        <View
-            android:id="@+id/lineOverview"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@android:color/darker_gray"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_below="@id/tvOverview"/>
         <TextView
             android:id="@+id/tvFlowIn"
+            android:layout_below="@id/tvOverview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tiền vào:"
-            android:layout_below="@id/lineOverview"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="50dp"
             android:textSize="24sp"
             android:textColor="@color/colorPrimary"
@@ -39,44 +34,42 @@
             />
         <TextView
             android:id="@+id/tvFlowInValue"
+            android:layout_below="@id/tvOverview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
-            android:layout_below="@id/lineOverview"
+            android:layout_marginTop="10dp"
+            android:paddingRight="10dp"
             android:layout_alignParentRight="true"
             android:text="5.000.000"
             android:textColor="#4CAF50"/>
+
         <TextView
             android:id="@+id/FlowOut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvFlowIn"
+            android:layout_below="@+id/tvFlowIn"
             android:text="Tiền ra:"
-            android:layout_below="@id/tvFlowIn"
-            android:layout_marginLeft="50sp"
-            android:textSize="24sp"
             android:textColor="@color/colorPrimary"
-            android:textStyle="bold"
-            />
+            android:textSize="24sp"
+            android:textStyle="bold" />
         <TextView
             android:id="@+id/FlowOutValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvFlowInValue"
+            android:paddingRight="10dp"
             android:layout_alignParentRight="true"
             android:text="458.000"
             android:textSize="24sp"
             android:textColor="@color/colorAccent"
             />
     </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
-        android:layout_margin="10dp"
 
-        />
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
         android:layout_height="0dp"
         android:layout_weight="2"
         >
@@ -84,6 +77,16 @@
         android:id="@+id/lvOuInByDay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></ListView>
-    </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabHoatDong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/fab_margin"
+            android:clickable="true"
+            app:srcCompat="@android:drawable/ic_input_add" />
+    </RelativeLayout>
 
 </LinearLayout>

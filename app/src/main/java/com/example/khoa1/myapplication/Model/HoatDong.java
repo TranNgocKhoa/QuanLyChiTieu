@@ -1,11 +1,35 @@
 package com.example.khoa1.myapplication.Model;
 
+import java.util.Date;
+
 /**
  * Created by khoa1 on 11/8/2017.
  */
-
+//Test commit khoa branch
 public abstract class HoatDong {
-    public HoatDong(int maHoatDong, int soTien, Category category, String tieuDe, String noiDung, Account taiKhoan) {
+
+    private int maHoatDong;
+    private double soTien;
+    private Date ngay;
+    private Category category;
+    private String tieuDe;
+    private String noiDung;
+    private Account taiKhoan;
+
+
+    public void setSoTien(double soTien) {
+        this.soTien = soTien;
+    }
+
+    public Date getNgay() {
+        return ngay;
+    }
+
+    public void setNgay(Date ngay) {
+        this.ngay = ngay;
+    }
+
+    public HoatDong(int maHoatDong, double soTien, Date ngay, Category category, String tieuDe, String noiDung, Account taiKhoan) {
         this.maHoatDong = maHoatDong;
         this.soTien = soTien;
         this.category = category;
@@ -24,7 +48,7 @@ public abstract class HoatDong {
         this.maHoatDong = maHoatDong;
     }
 
-    public int getSoTien() {
+    public double getSoTien() {
         return soTien;
     }
 
@@ -55,13 +79,6 @@ public abstract class HoatDong {
     public void setNoiDung(String noiDung) {
         this.noiDung = noiDung;
     }
-
-    private int maHoatDong;
-    private int soTien;
-    private Category category;
-    private String tieuDe;
-    private String noiDung;
-    private Account taiKhoan;
 
     public Account getTaiKhoan() {
         return taiKhoan;

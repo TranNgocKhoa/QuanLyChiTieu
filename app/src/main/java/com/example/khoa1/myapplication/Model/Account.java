@@ -5,58 +5,57 @@ package com.example.khoa1.myapplication.Model;
  */
 
 public class Account {
-    private int id;
-    private String name;
-    private int balance;
-    private int debit;
-    private AccountType accountType;
+    private int maTaiKhoan;
+    private String tenTaiKhoan;
+    private double soTienDu;
+    private double soTienNo;
+    private int picture;
 
-    public Account(int id, String name, int balance, int debit, AccountType accountType) {
-        this.id = id;
-        this.name = name;
-        this.balance = balance;
-        this.debit = debit;
-        this.accountType = accountType;
+    public int getMaTaiKhoan() {
+        return maTaiKhoan;
     }
 
-    public int getId() {
-
-        return id;
+    public void setMaTaiKhoan(int maTaiKhoan) {
+        this.maTaiKhoan = maTaiKhoan;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getTenTaiKhoan() {
+        return tenTaiKhoan;
     }
 
-    public String getName() {
-        return name;
+    public void setTenTaiKhoan(String tenTaiKhoan) {
+        this.tenTaiKhoan = tenTaiKhoan;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public double getSoTienDu() {
+        return soTienDu;
     }
 
-    public int getBalance() {
-        return balance;
+    public void setSoTienDu(double soTienDu) {
+        this.soTienDu = soTienDu;
     }
 
-    public void setBalance(int balance) {
-        this.balance = balance;
+    public double getSoTienNo() {
+        return soTienNo;
     }
 
-    public int getDebit() {
-        return debit;
+    public void setSoTienNo(double soTienNo) {
+        this.soTienNo = soTienNo;
     }
 
-    public void setDebit(int debit) {
-        this.debit = debit;
+    public Account(int maTaiKhoan, String tenTaiKhoan, double soTienDu, double soTienNo, int picture) {
+        this.maTaiKhoan = maTaiKhoan;
+        this.tenTaiKhoan = tenTaiKhoan;
+        this.soTienDu = soTienDu;
+        this.soTienNo = soTienNo;
+        this.picture = picture;
+    }
+    public int getPicture() {
+        return picture;
+    }
+    public void setPicture(int picture) {
+        this.picture = picture;
     }
 
-    public AccountType getAccountType() {
-        return accountType;
-    }
 
-    public void setAccountType(AccountType accountType) {
-        this.accountType = accountType;
-    }
 }

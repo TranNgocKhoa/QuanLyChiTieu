@@ -19,9 +19,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ChiTietHoatDong"/>
+        <activity android:name=".ChiTietHoatDong" />
         <activity android:name=".ChinhSuaHoatDong" />
-        <activity android:name=".ChinhSuaTaiKhoan"></activity>
+        <activity android:name=".ChinhSuaTaiKhoan" />
+        <activity android:name=".ChiTietTaiKhoan" />
+        <activity android:name=".ThemHoatDong" />
+        <activity
+            android:name=".ChonLoaiHoatDong"
+            android:label="@string/title_activity_chon_loai_hoat_dong"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ChonIconTaiKhoan"></activity>
     </application>
 
 </manifest>
