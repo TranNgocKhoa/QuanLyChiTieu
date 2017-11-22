@@ -1,9 +1,12 @@
 package com.example.khoa1.myapplication.Database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.util.Log;
 
+import com.example.khoa1.myapplication.Model.Account;
 import com.example.khoa1.myapplication.Model.Category;
 import com.example.khoa1.myapplication.Model.DanhGia;
 
@@ -35,7 +38,7 @@ public class SQLiteDanhGia extends SQLiteDataController {
                 int DanhGia = cs.getInt(4);
                 String ChiTiet = cs.getString(5);
 
-                DanhGia danhGia = new DanhGia(MaDanhGia, HinhAnh,  KinhDo, ViDo, DanhGia, ChiTiet);
+                DanhGia danhGia = new DanhGia(MaDanhGia, HinhAnh,  KinhDo, ViDo, DanhGia);
                 arrDanhGia.add(danhGia);
             }
 
@@ -63,7 +66,7 @@ public class SQLiteDanhGia extends SQLiteDataController {
                 float ViDo = cs.getFloat(3);
                 int DanhGia = cs.getInt(4);
                 String ChiTiet = cs.getString(5);
-                danhGia = new DanhGia(MaDanhGia, HinhAnh,  KinhDo, ViDo, DanhGia, ChiTiet);
+                danhGia = new DanhGia(MaDanhGia, HinhAnh,  KinhDo, ViDo, DanhGia);
             }
 
         } catch (SQLException e) {
@@ -74,5 +77,49 @@ public class SQLiteDanhGia extends SQLiteDataController {
         if(danhGia != null)
             return danhGia;
         else return null;
+    }
+
+
+    public boolean addDanhGia(DanhGia danhGia){
+        boolean result = false;
+        try {
+
+            openDataBase();
+            ContentValues values = new ContentValues();
+            values.put("HinhAnh", danhGia.getHinhAnh());
+            values.put("KinhDo", danhGia.getLongtitude());
+            values.put("ViDo", danhGia.getLatitude());
+            values.put("DanhGia", danhGia.getRate());
+            //  values.put("SoTienNo", account.getAccountType().getId());
+            long rs = database.insert("DanhGia", null, values);
+            if (rs > 0) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        Log.d("aaa","finish");
+        return result;
+    }
+
+
+    public int getLastDanhGia()
+    {
+        int maDanhGia = -1;
+        try {
+
+            openDataBase();
+             Cursor cs = database.rawQuery("SELECT last_insert_rowid()", null);
+            while (cs.moveToNext()) {
+                maDanhGia = cs.getInt(0);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return  maDanhGia;
     }
 }

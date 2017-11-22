@@ -48,14 +48,15 @@ public class ChonLoaiHoatDong extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-//        Category catCT1 = new Category(0, "Mua Sắm", R.drawable.muasam);
-//        Category catCT2 = new Category(0, "Ăn Quán", R.drawable.food2);
-//        Category catCT3 = new Category(0, "Uống Cafe", R.drawable.cafe);
-//        Category catCT4 = new Category(0, "Uống Trà Sữa", R.drawable.milk);
-//        Category catCT5 = new Category(0, "Đổ Xăng", R.drawable.xang);
-//        Category catCT6 = new Category(0, "Đồ Uống Khác", R.drawable.bar1);
-//        Category catCT7 = new Category(0, "Chi Tiêu Khác", R.drawable.other_shopping);
-//
+
+        Category catCT1 = new Category(0, "Mua Sắm", R.drawable.muasam);
+        Category catCT2 = new Category(0, "Ăn Quán", R.drawable.food2);
+        Category catCT3 = new Category(0, "Uống Cafe", R.drawable.cafe);
+        Category catCT4 = new Category(0, "Uống Trà Sữa", R.drawable.milk);
+        Category catCT5 = new Category(0, "Đổ Xăng", R.drawable.xang);
+        Category catCT6 = new Category(0, "Đồ Uống Khác", R.drawable.bar1);
+        Category catCT7 = new Category(0, "Chi Tiêu Khác", R.drawable.other_shopping);
+
 //        sqLiteCategory.addChiTieuCategory(catCT1);
 //        sqLiteCategory.addChiTieuCategory(catCT2);
 //        sqLiteCategory.addChiTieuCategory(catCT3);

@@ -10,24 +10,14 @@ public class DanhGia {
     private float longtitude;
     private float latitude;
     private int rate;
-    private String chiTiet;
 
-    public String getChiTiet() {
-        return chiTiet;
-    }
-
-    public void setChiTiet(String chiTiet) {
-        this.chiTiet = chiTiet;
-    }
-
-    public DanhGia(int maDanhGia, byte[] hinhAnh, float longtitude, float latitude, int rate, String chiTiet) {
+    public DanhGia(int maDanhGia, byte[] hinhAnh, float longtitude, float latitude, int rate) {
 
         this.maDanhGia = maDanhGia;
         this.hinhAnh = hinhAnh;
         this.longtitude = longtitude;
         this.latitude = latitude;
         this.rate = rate;
-        this.chiTiet = chiTiet;
     }
 
     public DanhGia() {
