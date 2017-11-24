@@ -15,6 +15,7 @@
     android:orientation="vertical"
     android:layout_below="@id/toolbar">
     <EditText
+        android:id="@+id/edSoTien"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
@@ -58,6 +59,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/note_icon"/>
         <EditText
+            android:id="@+id/edTieuDe"
             android:layout_toRightOf="@id/imageIconTieuDe"
             android:layout_centerInParent="true"
             android:layout_marginLeft="20dp"
@@ -83,6 +85,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/wallet_icon"/>
         <TextView
+            android:id="@+id/tvChonTaiKhoan"
             android:layout_toRightOf="@id/imageIconVi"
             android:layout_centerInParent="true"
             android:layout_marginLeft="20dp"
@@ -144,6 +147,7 @@
         android:background="@drawable/custom_textview_bottom_border"
         android:orientation="horizontal">
         <EditText
+            android:id="@+id/edNoiDung"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"

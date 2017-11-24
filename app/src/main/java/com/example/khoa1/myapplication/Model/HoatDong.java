@@ -31,6 +31,7 @@ public abstract class HoatDong {
 
     public HoatDong(int maHoatDong, double soTien, Date ngay, Category category, String tieuDe, String noiDung, Account taiKhoan) {
         this.maHoatDong = maHoatDong;
+        this.ngay = ngay;
         this.soTien = soTien;
         this.category = category;
         this.tieuDe = tieuDe;

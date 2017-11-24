@@ -2,11 +2,13 @@ package com.example.khoa1.myapplication.Model;
 
 import android.graphics.drawable.Drawable;
 
+import java.io.Serializable;
+
 /**
  * Created by khoa1 on 11/8/2017.
  */
 
-public class Category {
+public class Category implements Serializable {
 
     public Category(int maLoai, String tenLoai, int image) {
         MaLoai = maLoai;

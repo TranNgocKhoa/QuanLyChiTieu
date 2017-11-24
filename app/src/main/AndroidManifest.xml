@@ -28,7 +28,8 @@
             android:name=".ChonLoaiHoatDong"
             android:label="@string/title_activity_chon_loai_hoat_dong"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ChonIconTaiKhoan"></activity>
+        <activity android:name=".ChonIconTaiKhoan" />
+        <activity android:name=".ChonTaiKhoan"></activity>
     </application>
 
 </manifest>

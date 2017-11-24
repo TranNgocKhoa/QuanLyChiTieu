@@ -15,6 +15,7 @@ import com.example.khoa1.myapplication.Model.HoatDong;
 import com.example.khoa1.myapplication.Model.ThuNhap;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,14 +31,43 @@ public class SQLiteThuChi extends SQLiteDataController{
     SQLiteAccount sqLiteAccount;
     SQLiteCategory sqLiteCategory;
     SQLiteDanhGia sqLiteDanhGia;
+    Context context;
     public SQLiteThuChi(Context con)
     {
         super(con);
-        sqLiteAccount = new SQLiteAccount(con);
-        sqLiteCategory = new SQLiteCategory(con);
-        sqLiteDanhGia = new SQLiteDanhGia(con);
-
+        this.context = con;
     }
+
+    public ArrayList<ThuNhap> getListThuNhap(){
+        ArrayList<ThuNhap> listThuNhap = new ArrayList<>();
+        try{
+            openDataBase();
+            Cursor cs = database.rawQuery("select * from ThuTien",null);
+            ThuNhap thuNhap;
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            Date date;
+            while (cs.moveToNext()) {
+                sqLiteAccount = new SQLiteAccount(context);
+                sqLiteCategory = new SQLiteCategory(context);
+                thuNhap = new ThuNhap(cs.getInt(0),
+                        cs.getDouble(1),
+                        df.parse(cs.getString(2)), sqLiteCategory.getCategoryThuNhapByID(cs.getInt(3)),
+                        cs.getString(4),cs.getString(5),
+                        sqLiteAccount.getAccountByID(cs.getInt(6)));
+                Log.d("aaa",cs.getString(0));
+                listThuNhap.add(thuNhap);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return listThuNhap;
+    }
+
 
     public ArrayList<HoatDong> getListHoatDongByAccountID(int ID) {
         ArrayList<ChiTieu> arrChiTieu = new ArrayList<>();
@@ -161,7 +191,6 @@ public class SQLiteThuChi extends SQLiteDataController{
         ArrayList<HoatDong> listchiTieu= new ArrayList<>();
         ArrayList<Category> listLoaiThuChi =  getListLoaiThuChi();
         ArrayList<Account> listAccount = getListAccount();
-        SQLiteAccount accountsql=null;
         try{
             openDataBase();
             Cursor cs = database.rawQuery("SELECT *\n" +
@@ -176,7 +205,7 @@ public class SQLiteThuChi extends SQLiteDataController{
                         cs.getInt(1),
                         null, listLoaiThuChi.get(cs.getInt(3)),
                         cs.getString(4),cs.getString(5),
-                        accountsql.getAccountByID(IDAccount),null);
+                        sqLiteAccount.getAccountByID(IDAccount),null);
                 Log.d("aaa",cs.getString(0));
                 listchiTieu.add(chiTieu);
             }
@@ -189,8 +218,10 @@ public class SQLiteThuChi extends SQLiteDataController{
         return listchiTieu;
     }
 
+
     public boolean addChiTieu(ChiTieu chiTieu)
     {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         boolean result = false;
         try {
 
@@ -202,9 +233,37 @@ public class SQLiteThuChi extends SQLiteDataController{
             values.put("ChiTiet", chiTieu.getNoiDung());
             values.put("TieuDe", chiTieu.getTieuDe());
             values.put("MaDanhGia", chiTieu.getDanhGia().getMaDanhGia());
-            values.put("ChiTiet", chiTieu.getTaiKhoan().getMaTaiKhoan());
+            values.put("MaTaiKhoan", chiTieu.getTaiKhoan().getMaTaiKhoan());
             //  values.put("SoTienNo", account.getAccountType().getId());
             long rs = database.insert("ChiTien", null, values);
+            if (rs > 0) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        Log.d("aaa","finish");
+        return result;
+    }
+
+    public boolean addThuNhap(ThuNhap thuNhap)
+    {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        boolean result = false;
+        try {
+
+            openDataBase();
+            ContentValues values = new ContentValues();
+            values.put("MaLoaiThuTien", thuNhap.getCategory().getMaLoai());
+            values.put("SoTienThu", thuNhap.getSoTien());
+            values.put("Ngay", df.format(thuNhap.getNgay()));
+            values.put("ChiTiet", thuNhap.getNoiDung());
+            values.put("TieuDe", thuNhap.getTieuDe());
+            values.put("MaTaiKhoan", thuNhap.getTaiKhoan().getMaTaiKhoan());
+            //  values.put("SoTienNo", account.getAccountType().getId());
+            long rs = database.insert("ThuTien", null, values);
             if (rs > 0) {
                 result = true;
             }

@@ -1,10 +1,12 @@
 package com.example.khoa1.myapplication.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by khoa1 on 11/8/2017.
  */
 
-public class DanhGia {
+public class DanhGia implements Serializable{
     private int maDanhGia;
     private byte[] hinhAnh;
     private float longtitude;
