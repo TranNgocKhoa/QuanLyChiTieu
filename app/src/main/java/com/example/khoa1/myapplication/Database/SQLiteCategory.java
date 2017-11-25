@@ -147,7 +147,7 @@ public class SQLiteCategory extends SQLiteDataController {
             openDataBase();
             Cursor cs = database.rawQuery("SELECT *\n" +
                             "FROM LoaiThuTien\n" +
-                            "WHERE MaLoai = " + String.valueOf(ID)
+                            "WHERE MaLoaiThuTien = " + String.valueOf(ID)
                     , null);
 
             while (cs.moveToNext()) {

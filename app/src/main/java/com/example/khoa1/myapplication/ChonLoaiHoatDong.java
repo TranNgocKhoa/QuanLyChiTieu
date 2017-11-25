@@ -49,37 +49,6 @@ public class ChonLoaiHoatDong extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-if(sqLiteCategory.getListCategoryChiTieu().size() == 0) {
-    Category catCT1 = new Category(0, "Mua Sắm", R.drawable.muasam);
-    Category catCT2 = new Category(0, "Ăn Quán", R.drawable.food2);
-    Category catCT3 = new Category(0, "Uống Cafe", R.drawable.cafe);
-    Category catCT4 = new Category(0, "Uống Trà Sữa", R.drawable.milk);
-    Category catCT5 = new Category(0, "Đổ Xăng", R.drawable.xang);
-    Category catCT6 = new Category(0, "Đồ Uống Khác", R.drawable.bar1);
-    Category catCT7 = new Category(0, "Chi Tiêu Khác", R.drawable.other_shopping);
-
-    sqLiteCategory.addChiTieuCategory(catCT1);
-    sqLiteCategory.addChiTieuCategory(catCT2);
-    sqLiteCategory.addChiTieuCategory(catCT3);
-    sqLiteCategory.addChiTieuCategory(catCT4);
-    sqLiteCategory.addChiTieuCategory(catCT5);
-    sqLiteCategory.addChiTieuCategory(catCT6);
-    sqLiteCategory.addChiTieuCategory(catCT7);
-
-}
-        if(sqLiteCategory.getListCategoryThuNhap().size() == 0) {
-            Category catTN1 = new Category(0, "Lương", R.drawable.luong);
-            Category catTN2 = new Category(0, "Tiền Lãi", R.drawable.coin2);
-            Category catTN3 = new Category(0, "Bán Đồ", R.drawable.luong1);
-            Category catTN4 = new Category(0, "Thưởng", R.drawable.money_bag);
-            Category catTN5 = new Category(0, "Khoản Thu Khác", R.drawable.khoanthukhac);
-
-            sqLiteCategory.addThuNhapCategory(catTN1);
-            sqLiteCategory.addThuNhapCategory(catTN2);
-            sqLiteCategory.addThuNhapCategory(catTN3);
-            sqLiteCategory.addThuNhapCategory(catTN4);
-            sqLiteCategory.addThuNhapCategory(catTN5);
-        }
 
     }
 

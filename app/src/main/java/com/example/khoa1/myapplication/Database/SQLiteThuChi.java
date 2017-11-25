@@ -35,6 +35,9 @@ public class SQLiteThuChi extends SQLiteDataController{
     public SQLiteThuChi(Context con)
     {
         super(con);
+        sqLiteCategory = new SQLiteCategory(con);
+        sqLiteAccount = new SQLiteAccount(con);
+        sqLiteDanhGia = new SQLiteDanhGia(con);
         this.context = con;
     }
 
@@ -47,12 +50,10 @@ public class SQLiteThuChi extends SQLiteDataController{
             DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             Date date;
             while (cs.moveToNext()) {
-                sqLiteAccount = new SQLiteAccount(context);
-                sqLiteCategory = new SQLiteCategory(context);
                 thuNhap = new ThuNhap(cs.getInt(0),
-                        cs.getDouble(1),
-                        df.parse(cs.getString(2)), sqLiteCategory.getCategoryThuNhapByID(cs.getInt(3)),
-                        cs.getString(4),cs.getString(5),
+                        cs.getDouble(2),
+                        df.parse(cs.getString(3)), sqLiteCategory.getCategoryThuNhapByID(cs.getInt(1)),
+                        cs.getString(5),cs.getString(4),
                         sqLiteAccount.getAccountByID(cs.getInt(6)));
                 Log.d("aaa",cs.getString(0));
                 listThuNhap.add(thuNhap);
