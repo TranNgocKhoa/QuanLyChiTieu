@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class ThemHoatDong extends AppCompatActivity{
     private SQLiteThuChi sqLiteThuChi;
     private Account TaiKhoan;
     private Category category;
+    private RatingBar ratingBar;
     private DanhGia danhGia;
     private boolean thuNhap = true;
     @Override
@@ -67,6 +69,7 @@ public class ThemHoatDong extends AppCompatActivity{
         edSoTien = (EditText) findViewById(R.id.edSoTien);
         edTieuDe = (EditText) findViewById(R.id.edTieuDe);
         edNoiDung = (EditText) findViewById(R.id.edNoiDung);
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         tvChonLoaiHoatDong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -140,8 +143,20 @@ public class ThemHoatDong extends AppCompatActivity{
         }
         else
         {
-
+            danhGia = getDanhGia();
+            ChiTieu chiTieuRecord = new ChiTieu(0, soTien, myCalendar.getTime(), category, tieuDe, noiDung, TaiKhoan, danhGia);
+            sqLiteThuChi.addChiTieu(chiTieuRecord);
         }
+    }
+
+    private DanhGia getDanhGia()
+    {
+        DanhGia danhGia = null;
+        if(ratingBar.getNumStars() > 0)
+        {
+            danhGia = new DanhGia(0, null, 0.0f, 0.0f, ratingBar.getNumStars());
+        }
+        return danhGia;
     }
 
 

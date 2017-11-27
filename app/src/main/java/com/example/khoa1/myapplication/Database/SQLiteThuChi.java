@@ -70,6 +70,35 @@ public class SQLiteThuChi extends SQLiteDataController{
     }
 
 
+    public ArrayList<ChiTieu> getListChiTieu(){
+        ArrayList<ChiTieu> listChiTieu = new ArrayList<>();
+        try{
+            openDataBase();
+            Cursor cs = database.rawQuery("select * from ChiTien",null);
+            ChiTieu chiTieu;
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            Date date;
+            while (cs.moveToNext()) {
+                chiTieu = new ChiTieu(cs.getInt(0),
+                        cs.getDouble(2),
+                        df.parse(cs.getString(3)),
+                        sqLiteCategory.getCategoryThuNhapByID(cs.getInt(1)),
+                        cs.getString(5),cs.getString(4),
+                        sqLiteAccount.getAccountByID(cs.getInt(6)), null);
+                Log.d("aaa",cs.getString(0));
+                listChiTieu.add(chiTieu);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return listChiTieu;
+    }
+
     public ArrayList<HoatDong> getListHoatDongByAccountID(int ID) {
         ArrayList<ChiTieu> arrChiTieu = new ArrayList<>();
         ArrayList<ThuNhap> arrThuNhap = new ArrayList<>();
@@ -227,13 +256,15 @@ public class SQLiteThuChi extends SQLiteDataController{
         try {
 
             openDataBase();
+            sqLiteDanhGia.addDanhGia(chiTieu.getDanhGia());
+            int maDanhGia = sqLiteDanhGia.getLastDanhGia();
             ContentValues values = new ContentValues();
             values.put("MaLoaiChiTien", chiTieu.getCategory().getMaLoai());
-            values.put("SoTien", chiTieu.getSoTien());
-            values.put("Ngay", chiTieu.getNgay().toString());
+            values.put("SoTienChi", chiTieu.getSoTien());
+            values.put("Ngay", df.format(chiTieu.getNgay()));
             values.put("ChiTiet", chiTieu.getNoiDung());
             values.put("TieuDe", chiTieu.getTieuDe());
-            values.put("MaDanhGia", chiTieu.getDanhGia().getMaDanhGia());
+            values.put("MaDanhGia", maDanhGia);
             values.put("MaTaiKhoan", chiTieu.getTaiKhoan().getMaTaiKhoan());
             //  values.put("SoTienNo", account.getAccountType().getId());
             long rs = database.insert("ChiTien", null, values);
