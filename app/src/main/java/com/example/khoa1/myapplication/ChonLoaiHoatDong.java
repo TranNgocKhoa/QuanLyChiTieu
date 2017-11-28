@@ -18,7 +18,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.example.khoa1.myapplication.Database.SQLiteCategory;
+import com.example.khoa1.myapplication.Model.Category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +31,15 @@ public class ChonLoaiHoatDong extends AppCompatActivity {
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
     private static final String TAG = "ChonLoaiHoatDong";
+    SQLiteCategory sqLiteCategory;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chon_loai_hoat_dong);
         Log.d(TAG, "onCreate: Starting.");
-
+        sqLiteCategory = new SQLiteCategory(this);
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -42,6 +48,8 @@ public class ChonLoaiHoatDong extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+
     }
 
     private void setupViewPager(ViewPager viewPager) {

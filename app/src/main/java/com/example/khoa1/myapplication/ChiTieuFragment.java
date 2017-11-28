@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.khoa1.myapplication.Adapter.AccountAdapter;
 import com.example.khoa1.myapplication.Adapter.ChiTieuAdapter;
+import com.example.khoa1.myapplication.Database.SQLiteThuChi;
 import com.example.khoa1.myapplication.Model.Account;
 import com.example.khoa1.myapplication.Model.AccountType;
 import com.example.khoa1.myapplication.Model.Category;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 public class ChiTieuFragment extends Fragment {
     private ListView lvChiTieu;
     private FloatingActionButton fabChiTieu;
+    private SQLiteThuChi sqLiteThuChi;
     public ChiTieuFragment() {
     }
 
@@ -37,6 +39,7 @@ public class ChiTieuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_chitieu, container, false);
+        sqLiteThuChi = new SQLiteThuChi(getContext());
         lvChiTieu = (ListView) rootView.findViewById(R.id.lvChiTieu);
         lvChiTieu.setOnItemClickListener(new ListViewOnItemClickListener());
         registerForContextMenu(lvChiTieu);
@@ -47,19 +50,27 @@ public class ChiTieuFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity().getApplicationContext(),ThemHoatDong.class);
-                startActivity(intent);
+                startActivityForResult(intent, 0);
             }
         });
-        Category anUong = new Category(1, "Ăn Uống", R.drawable.anuong);
-        Category muaSam = new Category(2, "Mua Sắm", R.drawable.muasam);
         ArrayList<ChiTieu> arrChiTieu = new ArrayList<ChiTieu>();
-
+        arrChiTieu = sqLiteThuChi.getListChiTieu();
 
 
         ChiTieuAdapter chiTieuAdapter = new ChiTieuAdapter(getActivity(), R.layout.chitieu_listview, arrChiTieu);
         lvChiTieu.setAdapter(chiTieuAdapter);
 //lvAccount.setAdapter(arAdp);
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == 0) {
+            ArrayList<ChiTieu> arrChiTieu = sqLiteThuChi.getListChiTieu();
+            Toast.makeText(getContext(), String.valueOf(arrChiTieu.size()), Toast.LENGTH_LONG).show();
+            ChiTieuAdapter chiTieuAdapter = new ChiTieuAdapter(getActivity(), R.layout.chitieu_listview, arrChiTieu);
+            lvChiTieu.setAdapter(chiTieuAdapter);
+        }
     }
 
     @Override

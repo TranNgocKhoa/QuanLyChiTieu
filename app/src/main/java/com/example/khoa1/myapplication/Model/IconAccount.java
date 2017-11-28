@@ -6,12 +6,10 @@ package com.example.khoa1.myapplication.Model;
 
 public class IconAccount {
     private int drawableID;
-    private String name;
 
 
-    public IconAccount(int drawableID, String name) {
+    public IconAccount(int drawableID) {
         this.drawableID = drawableID;
-        this.name = name;
     }
 
     public int getDrawableID() {
@@ -20,13 +18,5 @@ public class IconAccount {
 
     public void setDrawableID(int drawableID) {
         this.drawableID = drawableID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

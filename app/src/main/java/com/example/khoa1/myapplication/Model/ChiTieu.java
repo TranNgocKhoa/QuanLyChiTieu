@@ -10,8 +10,8 @@ public class ChiTieu extends HoatDong{
 
     private DanhGia danhGia;
 
-    public ChiTieu(int maHoatDong, int soTien, Date date, Category category, String tieuDe, String noiDung, Account taiKhoan, DanhGia danhGia) {
-        super(maHoatDong, soTien,date ,category, tieuDe, noiDung, taiKhoan);
+    public ChiTieu(int maHoatDong, double soTien, Date ngay, Category category, String tieuDe, String noiDung, Account taiKhoan, DanhGia danhGia) {
+        super(maHoatDong, soTien, ngay, category, tieuDe, noiDung, taiKhoan);
         this.danhGia = danhGia;
     }
 

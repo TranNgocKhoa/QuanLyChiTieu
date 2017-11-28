@@ -115,8 +115,9 @@ public class SQLiteDataController extends SQLiteOpenHelper {
      * @throws SQLException
      */
     public void openDataBase() throws SQLException {
-        database = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null,
+        this.database = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null,
                 SQLiteDatabase.OPEN_READWRITE);
+
     }
 
     @Override

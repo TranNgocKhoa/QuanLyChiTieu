@@ -33,6 +33,7 @@ public class ChinhSuaTaiKhoan extends AppCompatActivity {
     private EditText soDu;
     private EditText soNo;
     private int imageId = R.drawable.wallet_account;
+    SQLiteAccount sqlAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +42,24 @@ public class ChinhSuaTaiKhoan extends AppCompatActivity {
         //Enable Toolbar back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        sqlAccount = new SQLiteAccount(getApplicationContext());
         chonImage = (TextView) findViewById(R.id.tvChonHinh);
         imageTaiKhoan = (ImageView) findViewById(R.id.imageTaiKhoan);
         tenTaiKhoan = (EditText) findViewById(R.id.tenTaiKhoan);
         soDu = (EditText) findViewById(R.id.soDu);
         soNo = (EditText) findViewById(R.id.soNo);
         Them = getIntent().getBooleanExtra("Them", true);
-
+        if(!Them) {
+            maTaiKhoan = getIntent().getIntExtra("Ma Tai Khoan", 0);
+            Account account = sqlAccount.getAccountByID(maTaiKhoan);
+            if(account != null)
+            {
+                imageTaiKhoan.setImageResource(account.getPicture());
+                tenTaiKhoan.setText(account.getTenTaiKhoan());
+                soDu.setText(String.valueOf(account.getSoTienDu()));
+                soNo.setText(String.valueOf(account.getSoTienNo()));
+            }
+        }
         chonImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,7 +121,8 @@ public class ChinhSuaTaiKhoan extends AppCompatActivity {
         }
         else
         {
-
+            Account account = new Account(maTaiKhoan, TenTaiKhoan, SoDu, SoNo, imageId);
+            sqlAccount.updateAccount(account);
         }
 
     }

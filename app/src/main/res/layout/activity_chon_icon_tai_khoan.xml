@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gridview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.khoa1.myapplication.ChonIconTaiKhoan">
+    android:columnWidth="85dp"
+    android:numColumns="auto_fit"
+    android:verticalSpacing="10dp"
+    android:horizontalSpacing="10dp"
+    android:stretchMode="columnWidth"
+    android:gravity="center"
+    >
 
-    <ListView
-        android:id="@+id/lvICon"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-
-    </ListView>
-</android.support.constraint.ConstraintLayout>
+</GridView>

@@ -13,11 +13,18 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.khoa1.myapplication.Database.SQLiteCategory;
+import com.example.khoa1.myapplication.Database.SQLiteDataController;
+import com.example.khoa1.myapplication.Model.Category;
+
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     private String[] mNavigationDrawerItemTitles;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
+    SQLiteCategory sqLiteCategory;
     Toolbar toolbar;    //Thanh toolbar trên cùng
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
@@ -27,12 +34,50 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SQLiteDataController sql = new SQLiteDataController(this);
+        try {
+            sql.isCreatedDatabase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        sqLiteCategory = new SQLiteCategory(this);
+        if(sqLiteCategory.getListCategoryChiTieu().size() == 0) {
+            Category catCT1 = new Category(0, "Mua Sắm", R.drawable.muasam);
+            Category catCT2 = new Category(0, "Ăn Quán", R.drawable.food2);
+            Category catCT3 = new Category(0, "Uống Cafe", R.drawable.cafe);
+            Category catCT4 = new Category(0, "Uống Trà Sữa", R.drawable.milk);
+            Category catCT5 = new Category(0, "Đổ Xăng", R.drawable.xang);
+            Category catCT6 = new Category(0, "Đồ Uống Khác", R.drawable.bar1);
+            Category catCT7 = new Category(0, "Chi Tiêu Khác", R.drawable.other_shopping);
+
+            sqLiteCategory.addChiTieuCategory(catCT1);
+            sqLiteCategory.addChiTieuCategory(catCT2);
+            sqLiteCategory.addChiTieuCategory(catCT3);
+            sqLiteCategory.addChiTieuCategory(catCT4);
+            sqLiteCategory.addChiTieuCategory(catCT5);
+            sqLiteCategory.addChiTieuCategory(catCT6);
+            sqLiteCategory.addChiTieuCategory(catCT7);
+
+        }
+        if(sqLiteCategory.getListCategoryThuNhap().size() == 0) {
+            Category catTN1 = new Category(0, "Lương", R.drawable.luong);
+            Category catTN2 = new Category(0, "Tiền Lãi", R.drawable.coin2);
+            Category catTN3 = new Category(0, "Bán Đồ", R.drawable.luong1);
+            Category catTN4 = new Category(0, "Thưởng", R.drawable.money_bag);
+            Category catTN5 = new Category(0, "Khoản Thu Khác", R.drawable.khoanthukhac);
+
+            sqLiteCategory.addThuNhapCategory(catTN1);
+            sqLiteCategory.addThuNhapCategory(catTN2);
+            sqLiteCategory.addThuNhapCategory(catTN3);
+            sqLiteCategory.addThuNhapCategory(catTN4);
+            sqLiteCategory.addThuNhapCategory(catTN5);
+        }
+
         mTitle = mDrawerTitle = getTitle(); //Lấy title của Activity
         //Mỗi fragment sẽ dùng title của navigation_drawer_item_array
         mNavigationDrawerItemTitles= getResources().getStringArray(R.array.navigation_drawer_items_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
         setupToolbar();
 
         DataModel[] drawerItem = new DataModel[5];

@@ -10,21 +10,33 @@ public abstract class HoatDong {
 
     private int maHoatDong;
     private double soTien;
+    private Date ngay;
     private Category category;
     private String tieuDe;
     private String noiDung;
     private Account taiKhoan;
-    private Date date;
 
 
-    public HoatDong(int maHoatDong, int soTien,Date date, Category category, String tieuDe, String noiDung, Account taiKhoan) {
+    public void setSoTien(double soTien) {
+        this.soTien = soTien;
+    }
+
+    public Date getNgay() {
+        return ngay;
+    }
+
+    public void setNgay(Date ngay) {
+        this.ngay = ngay;
+    }
+
+    public HoatDong(int maHoatDong, double soTien, Date ngay, Category category, String tieuDe, String noiDung, Account taiKhoan) {
         this.maHoatDong = maHoatDong;
+        this.ngay = ngay;
         this.soTien = soTien;
         this.category = category;
         this.tieuDe = tieuDe;
         this.noiDung = noiDung;
         this.taiKhoan = taiKhoan;
-        this.date = date;
     }
 
     public int getMaHoatDong() {

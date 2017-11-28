@@ -15,6 +15,7 @@
     android:orientation="vertical"
     android:layout_below="@id/toolbar">
     <EditText
+        android:id="@+id/edSoTien"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
@@ -24,7 +25,6 @@
         android:padding="10dp"
         android:background="@drawable/custom_textview_bottom_border"/>
     <RelativeLayout
-        android:layout_below="@id/headerChiTietTk"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,7 +48,6 @@
             android:text="Chọn Loại"/>
     </RelativeLayout>
     <RelativeLayout
-        android:layout_below="@id/headerChiTietTk"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,6 +59,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/note_icon"/>
         <EditText
+            android:id="@+id/edTieuDe"
             android:layout_toRightOf="@id/imageIconTieuDe"
             android:layout_centerInParent="true"
             android:layout_marginLeft="20dp"
@@ -85,6 +85,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/wallet_icon"/>
         <TextView
+            android:id="@+id/tvChonTaiKhoan"
             android:layout_toRightOf="@id/imageIconVi"
             android:layout_centerInParent="true"
             android:layout_marginLeft="20dp"
@@ -95,6 +96,31 @@
             android:textSize="25sp"
 
             android:text="Chọn Tài Khoản"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_textview_bottom_border"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imgIconNgay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/sotietkiem"/>
+        <TextView
+            android:id="@+id/tvChonNgay"
+            android:layout_toRightOf="@id/imgIconNgay"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
+            android:padding="0dp"
+            android:layout_width="wrap_content"
+            android:layout_weight="4"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text="Hôm nay"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_below="@id/headerChiTietTk"
@@ -121,6 +147,7 @@
         android:background="@drawable/custom_textview_bottom_border"
         android:orientation="horizontal">
         <EditText
+            android:id="@+id/edNoiDung"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"

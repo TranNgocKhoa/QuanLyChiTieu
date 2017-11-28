@@ -1,18 +1,26 @@
 package com.example.khoa1.myapplication.Database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.example.khoa1.myapplication.Model.Account;
 import com.example.khoa1.myapplication.Model.Category;
 import com.example.khoa1.myapplication.Model.ChiTieu;
 import com.example.khoa1.myapplication.Model.HoatDong;
+import com.example.khoa1.myapplication.Model.ThuNhap;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -20,9 +28,151 @@ import java.util.Date;
  */
 
 public class SQLiteThuChi extends SQLiteDataController{
-    public SQLiteThuChi(Context con) {
+    SQLiteAccount sqLiteAccount;
+    SQLiteCategory sqLiteCategory;
+    SQLiteDanhGia sqLiteDanhGia;
+    Context context;
+    public SQLiteThuChi(Context con)
+    {
         super(con);
+        sqLiteCategory = new SQLiteCategory(con);
+        sqLiteAccount = new SQLiteAccount(con);
+        sqLiteDanhGia = new SQLiteDanhGia(con);
+        this.context = con;
     }
+
+    public ArrayList<ThuNhap> getListThuNhap(){
+        ArrayList<ThuNhap> listThuNhap = new ArrayList<>();
+        try{
+            openDataBase();
+            Cursor cs = database.rawQuery("select * from ThuTien",null);
+            ThuNhap thuNhap;
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            Date date;
+            while (cs.moveToNext()) {
+                thuNhap = new ThuNhap(cs.getInt(0),
+                        cs.getDouble(2),
+                        df.parse(cs.getString(3)), sqLiteCategory.getCategoryThuNhapByID(cs.getInt(1)),
+                        cs.getString(5),cs.getString(4),
+                        sqLiteAccount.getAccountByID(cs.getInt(6)));
+                Log.d("aaa",cs.getString(0));
+                listThuNhap.add(thuNhap);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return listThuNhap;
+    }
+
+
+    public ArrayList<ChiTieu> getListChiTieu(){
+        ArrayList<ChiTieu> listChiTieu = new ArrayList<>();
+        try{
+            openDataBase();
+            Cursor cs = database.rawQuery("select * from ChiTien",null);
+            ChiTieu chiTieu;
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            Date date;
+            while (cs.moveToNext()) {
+                chiTieu = new ChiTieu(cs.getInt(0),
+                        cs.getDouble(2),
+                        df.parse(cs.getString(3)),
+                        sqLiteCategory.getCategoryChiTieuByID(cs.getInt(1)),
+                        cs.getString(5),cs.getString(4),
+                        sqLiteAccount.getAccountByID(cs.getInt(6)), null);
+                Log.d("aaa",cs.getString(0));
+                listChiTieu.add(chiTieu);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return listChiTieu;
+    }
+
+    public ArrayList<HoatDong> getListHoatDongByAccountID(int ID) {
+        ArrayList<ChiTieu> arrChiTieu = new ArrayList<>();
+        ArrayList<ThuNhap> arrThuNhap = new ArrayList<>();
+        try {
+            openDataBase();
+            Cursor cs = database.rawQuery("SELECT *\n" +
+                            "FROM ChiTien\n" +
+                    "WHERE MaTaiKhoan = " + String.valueOf(ID)
+                    , null);
+            ChiTieu chiTieu;
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            while (cs.moveToNext()) {
+                chiTieu = new ChiTieu(cs.getInt(0),
+                        cs.getDouble(2),
+                        df.parse(cs.getString(3)),
+                        sqLiteCategory.getCategoryChiTieuByID(cs.getInt(1)),
+                        cs.getString(5),cs.getString(4),
+                        sqLiteAccount.getAccountByID(cs.getInt(6)), null);
+                Log.d("aaa",cs.getString(0));
+
+                arrChiTieu.add(chiTieu);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        try {
+            openDataBase();
+            Cursor cs = database.rawQuery("SELECT *\n" +
+                            "FROM ThuTien\n" +
+                            "WHERE MaTaiKhoan = " + String.valueOf(ID)
+                    , null);
+            ThuNhap thuNhap;
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            while (cs.moveToNext()) {
+                thuNhap = new ThuNhap(cs.getInt(0),
+                        cs.getDouble(2),
+                        df.parse(cs.getString(3)), sqLiteCategory.getCategoryThuNhapByID(cs.getInt(1)),
+                        cs.getString(5),cs.getString(4),
+                        sqLiteAccount.getAccountByID(cs.getInt(6)));
+                Log.d("aaa",cs.getString(0));
+
+                arrThuNhap.add(thuNhap);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+
+
+        ArrayList<HoatDong> arrHoatDong = new ArrayList<HoatDong>();
+        arrHoatDong.addAll(arrChiTieu);
+        arrHoatDong.addAll(arrThuNhap);
+        Collections.sort(arrHoatDong, new Comparator<HoatDong>() {
+            @Override
+            public int compare(HoatDong hoatDong, HoatDong t1) {
+                return hoatDong.getNgay().compareTo(t1.getNgay());
+            }
+        });
+        return  arrHoatDong;
+    }
+
+
+
     public ArrayList<Category> getListLoaiThuChi(){
 
         ArrayList<Category> listLoaiThuChi= new ArrayList<>();
@@ -71,7 +221,6 @@ public class SQLiteThuChi extends SQLiteDataController{
         ArrayList<HoatDong> listchiTieu= new ArrayList<>();
         ArrayList<Category> listLoaiThuChi =  getListLoaiThuChi();
         ArrayList<Account> listAccount = getListAccount();
-        SQLiteAccount accountsql=null;
         try{
             openDataBase();
             Cursor cs = database.rawQuery("SELECT *\n" +
@@ -86,7 +235,7 @@ public class SQLiteThuChi extends SQLiteDataController{
                         cs.getInt(1),
                         null, listLoaiThuChi.get(cs.getInt(3)),
                         cs.getString(4),cs.getString(5),
-                        accountsql.getAccountByID(IDAccount),null);
+                        sqLiteAccount.getAccountByID(IDAccount),null);
                 Log.d("aaa",cs.getString(0));
                 listchiTieu.add(chiTieu);
             }
@@ -98,4 +247,65 @@ public class SQLiteThuChi extends SQLiteDataController{
 
         return listchiTieu;
     }
+
+
+    public boolean addChiTieu(ChiTieu chiTieu)
+    {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        boolean result = false;
+        try {
+
+            openDataBase();
+            sqLiteDanhGia.addDanhGia(chiTieu.getDanhGia());
+            int maDanhGia = sqLiteDanhGia.getLastDanhGia();
+            ContentValues values = new ContentValues();
+            values.put("MaLoaiChiTien", chiTieu.getCategory().getMaLoai());
+            values.put("SoTienChi", chiTieu.getSoTien());
+            values.put("Ngay", df.format(chiTieu.getNgay()));
+            values.put("ChiTiet", chiTieu.getNoiDung());
+            values.put("TieuDe", chiTieu.getTieuDe());
+            values.put("MaDanhGia", maDanhGia);
+            values.put("MaTaiKhoan", chiTieu.getTaiKhoan().getMaTaiKhoan());
+            //  values.put("SoTienNo", account.getAccountType().getId());
+            long rs = database.insert("ChiTien", null, values);
+            if (rs > 0) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        Log.d("aaa","finish");
+        return result;
+    }
+
+    public boolean addThuNhap(ThuNhap thuNhap)
+    {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        boolean result = false;
+        try {
+
+            openDataBase();
+            ContentValues values = new ContentValues();
+            values.put("MaLoaiThuTien", thuNhap.getCategory().getMaLoai());
+            values.put("SoTienThu", thuNhap.getSoTien());
+            values.put("Ngay", df.format(thuNhap.getNgay()));
+            values.put("ChiTiet", thuNhap.getNoiDung());
+            values.put("TieuDe", thuNhap.getTieuDe());
+            values.put("MaTaiKhoan", thuNhap.getTaiKhoan().getMaTaiKhoan());
+            //  values.put("SoTienNo", account.getAccountType().getId());
+            long rs = database.insert("ThuTien", null, values);
+            if (rs > 0) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        Log.d("aaa","finish");
+        return result;
+    }
+
 }

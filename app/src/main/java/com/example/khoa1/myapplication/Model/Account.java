@@ -1,15 +1,29 @@
 package com.example.khoa1.myapplication.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by khoa1 on 10/31/2017.
  */
 
-public class Account {
+public class Account implements Serializable{
     private int maTaiKhoan;
     private String tenTaiKhoan;
     private double soTienDu;
     private double soTienNo;
     private int picture;
+
+    protected Account(Parcel in) {
+        maTaiKhoan = in.readInt();
+        tenTaiKhoan = in.readString();
+        soTienDu = in.readDouble();
+        soTienNo = in.readDouble();
+        picture = in.readInt();
+    }
+
 
     public int getMaTaiKhoan() {
         return maTaiKhoan;
@@ -56,6 +70,5 @@ public class Account {
     public void setPicture(int picture) {
         this.picture = picture;
     }
-
 
 }

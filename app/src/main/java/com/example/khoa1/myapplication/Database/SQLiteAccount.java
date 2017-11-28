@@ -41,6 +41,29 @@ public class SQLiteAccount extends SQLiteDataController{
         return ListAccount;
     }
 
+    public Account getAccountByID(int ID)
+    {
+        Account account = null;
+        try{
+            openDataBase();
+            String sql = "SELECT *\n" +
+                    "FROM TaiKhoan\n"+
+                    "WHERE TaiKhoan.MaTaiKhoan ="+String.valueOf(ID);
+            Cursor cs = database.rawQuery(sql
+                    ,null);
+           // if(cs.moveToFirst())
+            while (cs.moveToNext()) {
+                account = new Account(cs.getInt(0), cs.getString(1), cs.getDouble(2), cs.getDouble(3),cs.getInt(4));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return account;
+    }
+
     public void DeleteAllAccount(){
         ArrayList<Account> ListAccount= new ArrayList<Account>();
 

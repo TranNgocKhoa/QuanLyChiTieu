@@ -7,7 +7,8 @@ import java.util.Date;
  */
 
 public class ThuNhap extends HoatDong {
-    public ThuNhap(int maHoatDong, int soTien, Date date, Category category, String tieuDe, String noiDung, Account taiKhoan) {
-        super(maHoatDong, soTien,date, category, tieuDe, noiDung, taiKhoan);
+
+    public ThuNhap(int maHoatDong, double soTien, Date ngay, Category category, String tieuDe, String noiDung, Account taiKhoan) {
+        super(maHoatDong, soTien, ngay, category, tieuDe, noiDung, taiKhoan);
     }
 }
