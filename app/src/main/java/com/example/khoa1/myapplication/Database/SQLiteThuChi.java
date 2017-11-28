@@ -82,7 +82,7 @@ public class SQLiteThuChi extends SQLiteDataController{
                 chiTieu = new ChiTieu(cs.getInt(0),
                         cs.getDouble(2),
                         df.parse(cs.getString(3)),
-                        sqLiteCategory.getCategoryThuNhapByID(cs.getInt(1)),
+                        sqLiteCategory.getCategoryChiTieuByID(cs.getInt(1)),
                         cs.getString(5),cs.getString(4),
                         sqLiteAccount.getAccountByID(cs.getInt(6)), null);
                 Log.d("aaa",cs.getString(0));
@@ -108,23 +108,23 @@ public class SQLiteThuChi extends SQLiteDataController{
                             "FROM ChiTien\n" +
                     "WHERE MaTaiKhoan = " + String.valueOf(ID)
                     , null);
-
+            ChiTieu chiTieu;
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             while (cs.moveToNext()) {
-                int MaChiTien = cs.getInt(0);
-                int MaLoaiChiTien = cs.getInt(1);
-                double SoTienChi = cs.getDouble(2);
-                Date Ngay = new Date(cs.getLong(3));
-                String ChiTiet = cs.getString(4);
-                String TieuDe = cs.getString(5);
-                int MaDanhGia = cs.getInt(6);
-                int MaTaiKhoan = cs.getInt(7);
-                ChiTieu hd = new ChiTieu(MaChiTien, SoTienChi,Ngay,  sqLiteCategory.getCategoryChiTieuByID(MaLoaiChiTien),
-                        TieuDe, ChiTiet, sqLiteAccount.getAccountByID(MaTaiKhoan), sqLiteDanhGia.getDanhGiaByID(MaDanhGia));
+                chiTieu = new ChiTieu(cs.getInt(0),
+                        cs.getDouble(2),
+                        df.parse(cs.getString(3)),
+                        sqLiteCategory.getCategoryChiTieuByID(cs.getInt(1)),
+                        cs.getString(5),cs.getString(4),
+                        sqLiteAccount.getAccountByID(cs.getInt(6)), null);
+                Log.d("aaa",cs.getString(0));
 
-                arrChiTieu.add(hd);
+                arrChiTieu.add(chiTieu);
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         } finally {
             close();
@@ -136,22 +136,22 @@ public class SQLiteThuChi extends SQLiteDataController{
                             "FROM ThuTien\n" +
                             "WHERE MaTaiKhoan = " + String.valueOf(ID)
                     , null);
-
+            ThuNhap thuNhap;
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             while (cs.moveToNext()) {
-                int MaThuTien = cs.getInt(0);
-                int MaLoaiThuTien = cs.getInt(1);
-                double SoTienThu= cs.getDouble(2);
-                Date Ngay = new Date(cs.getLong(3));
-                String ChiTiet = cs.getString(4);
-                String TieuDe = cs.getString(5);
-                int MaTaiKhoan = cs.getInt(7);
-                ThuNhap hd = new ThuNhap(MaLoaiThuTien, SoTienThu,Ngay, sqLiteCategory.getCategoryThuNhapByID(MaLoaiThuTien),
-                        TieuDe, ChiTiet, sqLiteAccount.getAccountByID(MaTaiKhoan));
+                thuNhap = new ThuNhap(cs.getInt(0),
+                        cs.getDouble(2),
+                        df.parse(cs.getString(3)), sqLiteCategory.getCategoryThuNhapByID(cs.getInt(1)),
+                        cs.getString(5),cs.getString(4),
+                        sqLiteAccount.getAccountByID(cs.getInt(6)));
+                Log.d("aaa",cs.getString(0));
 
-                arrThuNhap.add(hd);
+                arrThuNhap.add(thuNhap);
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         } finally {
             close();
