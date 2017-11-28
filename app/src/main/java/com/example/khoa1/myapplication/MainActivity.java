@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new ChiTieuFragment();
                 break;
             case 4:
-                //fragment = new AccountFragment();
+                fragment = new thongke();
                 break;
 
             default:
