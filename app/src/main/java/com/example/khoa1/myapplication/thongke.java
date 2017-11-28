@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.khoa1.myapplication.Database.SQLiteThuChi;
+import com.example.khoa1.myapplication.Model.ChiTieu;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 
 
 public class thongke extends Fragment {
-
+    private ArrayList<ChiTieu> listChiTieu;
     private SQLiteThuChi sqLiteThuChi;
     private static String TAG = "ThongKeFragment";
     private ArrayList listarr = new ArrayList();
@@ -35,8 +36,10 @@ public class thongke extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-         View rootView = inflater.inflate(R.layout.fragment_thongke, container, false);
-       // final float[] yData = {25.3f, 10.6f, 66.76f, 44.32f, 46.01f, 16.89f, 23.9f};
+
+        View rootView = inflater.inflate(R.layout.fragment_thongke, container, false);
+        // final float[] yData = {25.3f, 10.6f, 66.76f, 44.32f, 46.01f, 16.89f, 23.9f};
+        listChiTieu=sqLiteThuChi.getListChiTieu();
         Log.d(TAG, "onCreate: starting to create chart");
         listarr.add(25f);
         listarr.add( 10f);
@@ -49,8 +52,6 @@ public class thongke extends Fragment {
         //pieChart.setCenterTextColor(Color.BLACK);
         pieChart.setHoleRadius(25f);
         pieChart.setTransparentCircleAlpha(0);
-        pieChart.setCenterText("Super Cool Chart");
-        pieChart.setCenterTextSize(10);
         //pieChart.setDrawEntryLabels(true);
         //pieChart.setEntryLabelTextSize(20);
         //More options just check out the documentation!
