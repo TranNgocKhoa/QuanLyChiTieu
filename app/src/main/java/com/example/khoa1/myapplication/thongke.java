@@ -97,10 +97,13 @@ public class thongke extends Fragment {
         ArrayList<String> xEntrys = new ArrayList<>();
 
         for(int i = 0; i < list.size(); i++){
+            yEntrys.add(new )
             yEntrys.add(new PieEntry(list.get(1).getTongTien() , i));
         }
-
-        for(int i = 1; i < xData.length; i++){
+//        for(int i = 0; i < yData.length; i++){
+//            yEntrys.add(new PieEntry(yData[i] , i));
+//        }
+        for(int i = 1; i < 2; i++){
             xEntrys.add(xData[i]);
         }
 

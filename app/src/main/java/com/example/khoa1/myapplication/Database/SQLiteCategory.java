@@ -41,6 +41,7 @@ public class SQLiteCategory extends SQLiteDataController {
                 int Image = cs.getInt(2);
                 int SoLuong= cs.getInt(3);
                 int TongTien= cs.getInt(4);
+                Log.d("Infor",TenLoai+' ' +Integer.toString(TongTien));
                 CategoryCount cat = new CategoryCount(MaChiTien, TenLoai, Image,SoLuong,TongTien);
                 arrCategory.add(cat);
             }
