@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.khoa1.myapplication.Database.SQLiteCategory;
 import com.example.khoa1.myapplication.Database.SQLiteThuChi;
+import com.example.khoa1.myapplication.Model.CategoryCount;
 import com.example.khoa1.myapplication.Model.ChiTieu;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -23,23 +25,25 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class thongke extends Fragment {
-    private ArrayList<ChiTieu> listChiTieu;
-    private SQLiteThuChi sqLiteThuChi;
+    private SQLiteCategory sqlcategory;
     private static String TAG = "ThongKeFragment";
     private ArrayList listarr = new ArrayList();
     private float[] yData ={25.3f, 10.6f, 66.76f, 44.32f, 46.01f, 16.89f, 23.9f};
     private String[] xData = {"Mitch", "Jessica" , "Mohammad" , "Kelsey", "Sam", "Robert", "Ashley"};
     PieChart pieChart;
+    private ArrayList<CategoryCount> list;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_thongke, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_thongke2, container, false);
         // final float[] yData = {25.3f, 10.6f, 66.76f, 44.32f, 46.01f, 16.89f, 23.9f};
-        listChiTieu=sqLiteThuChi.getListChiTieu();
+        sqlcategory = new SQLiteCategory(getContext());
+        list=sqlcategory.getListCategoryCount();
         Log.d(TAG, "onCreate: starting to create chart");
         listarr.add(25f);
         listarr.add( 10f);
@@ -92,8 +96,8 @@ public class thongke extends Fragment {
         ArrayList<PieEntry> yEntrys = new ArrayList<>();
         ArrayList<String> xEntrys = new ArrayList<>();
 
-        for(int i = 0; i < yData.length; i++){
-            yEntrys.add(new PieEntry(yData[i] , i));
+        for(int i = 0; i < list.size(); i++){
+            yEntrys.add(new PieEntry(list.get(1).getTongTien() , i));
         }
 
         for(int i = 1; i < xData.length; i++){
