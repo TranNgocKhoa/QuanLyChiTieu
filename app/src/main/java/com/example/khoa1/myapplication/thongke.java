@@ -45,9 +45,6 @@ public class thongke extends Fragment {
         sqlcategory = new SQLiteCategory(getContext());
         list=sqlcategory.getListCategoryCount();
         Log.d(TAG, "onCreate: starting to create chart");
-        listarr.add(25f);
-        listarr.add( 10f);
-        listarr.add(65f);
         pieChart = (PieChart) rootView.findViewById(R.id.idPieChart);
         pieChart.setDescription("Sales by employee (In Thousands $) ");
         pieChart.setRotationEnabled(true);
@@ -96,17 +93,18 @@ public class thongke extends Fragment {
         ArrayList<PieEntry> yEntrys = new ArrayList<>();
         ArrayList<String> xEntrys = new ArrayList<>();
 
-        for(int i = 0; i < list.size(); i++){
-            yEntrys.add(new )
-            yEntrys.add(new PieEntry(list.get(1).getTongTien() , i));
-        }
+//        for(int i = 0; i < list.size(); i++){
+//            yEntrys.add(new PieEntry(list.get(1).getTongTien() , i));
+//        }
 //        for(int i = 0; i < yData.length; i++){
 //            yEntrys.add(new PieEntry(yData[i] , i));
 //        }
-        for(int i = 1; i < 2; i++){
-            xEntrys.add(xData[i]);
+        for(int i = 0; i < list.size(); i++) {
+            yEntrys.add(new PieEntry(list.get(i).getTongTien(), i));
         }
-
+        for(int i = 1; i < xData.length; i++){
+                xEntrys.add(xData[i]);
+        }
         //create the data set
         PieDataSet pieDataSet = new PieDataSet(yEntrys, "Employee Sales");
         pieDataSet.setSliceSpace(2);
