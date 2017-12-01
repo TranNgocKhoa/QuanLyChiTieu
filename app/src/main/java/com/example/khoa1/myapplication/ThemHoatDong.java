@@ -3,15 +3,18 @@ package com.example.khoa1.myapplication;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,9 +38,11 @@ public class ThemHoatDong extends AppCompatActivity{
     private TextView tvChonLoaiHoatDong;
     private TextView tvChonNgay;
     private TextView tvChonTaiKhoan;
+    private ImageView imgChonTaiKhoan;
     private EditText edSoTien;
     private EditText edTieuDe;
     private EditText edNoiDung;
+    private ImageView imgChonLoaiHoatDong;
     private  Calendar myCalendar;
     private SQLiteThuChi sqLiteThuChi;
     private Account TaiKhoan;
@@ -63,9 +68,12 @@ public class ThemHoatDong extends AppCompatActivity{
             }
 
         };
+        myCalendar.setTime(myCalendar.getTime());
         tvChonLoaiHoatDong = (TextView) findViewById(R.id.tvChonLoaiHoatDong);
+        imgChonLoaiHoatDong = (ImageView) findViewById(R.id.imageIconLoai);
         tvChonNgay = (TextView) findViewById(R.id.tvChonNgay);
         tvChonTaiKhoan = (TextView) findViewById(R.id.tvChonTaiKhoan);
+        imgChonTaiKhoan = (ImageView) findViewById(R.id.imageIconVi) ;
         edSoTien = (EditText) findViewById(R.id.edSoTien);
         edTieuDe = (EditText) findViewById(R.id.edTieuDe);
         edNoiDung = (EditText) findViewById(R.id.edNoiDung);
@@ -175,6 +183,11 @@ public class ThemHoatDong extends AppCompatActivity{
                     thuNhap = true;
                     category = (Category) data.getSerializableExtra("LoaiThuNhap");
                 }
+
+                //Cập nhật hình và text cho loại hoạt động
+                tvChonLoaiHoatDong.setText(category.getTenLoai());
+                imgChonLoaiHoatDong.setImageResource(category.getImage());
+
             }
         }
         if(requestCode == 2)
@@ -185,6 +198,9 @@ public class ThemHoatDong extends AppCompatActivity{
                 {
                     TaiKhoan = acc;
                 }
+                //Cập nhật account icon và tên
+                tvChonTaiKhoan.setText(TaiKhoan.getTenTaiKhoan());
+                imgChonTaiKhoan.setImageResource(TaiKhoan.getPicture());
             }
         }
     }

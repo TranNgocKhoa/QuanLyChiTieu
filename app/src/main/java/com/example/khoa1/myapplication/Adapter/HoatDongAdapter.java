@@ -51,6 +51,9 @@ public class HoatDongAdapter extends ArrayAdapter {
         HoatDong hoatDong = arrHoatDong.get(position);
         if(hoatDong.getClass() == ChiTieu.class)
             convertView.setBackgroundResource(R.color.colorSecondaryLight);
+        else {
+            convertView.setBackgroundResource(android.R.color.background_light);
+        }
         viewHolder.imgChiTieuType.setImageResource(hoatDong.getCategory().getImage());
         viewHolder.tvChiTieuName.setText(hoatDong.getTieuDe());
         viewHolder.tvSoTien.setText(Double.toString(hoatDong.getSoTien()));

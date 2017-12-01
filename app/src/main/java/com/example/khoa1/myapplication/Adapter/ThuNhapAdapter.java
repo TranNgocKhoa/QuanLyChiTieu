@@ -47,8 +47,12 @@ public class ThuNhapAdapter extends ArrayAdapter<ThuNhap> {
             viewHolder = (ThuNhapAdapter.ViewHolder) convertView.getTag();
         }
         ThuNhap ThuNhap = arrThuNhap.get(position);
-        if(position%2==0)
+        if(position%2==0) {
             convertView.setBackgroundResource(R.color.colorSecondaryLight);
+        }
+        else {
+            convertView.setBackgroundResource(android.R.color.background_light);
+        }
         viewHolder.imgThuNhapType.setImageResource(ThuNhap.getCategory().getImage());
         viewHolder.tvThuNhapName.setText(ThuNhap.getTieuDe());
         viewHolder.tvSoTien.setText(Double.toString(ThuNhap.getSoTien()));
