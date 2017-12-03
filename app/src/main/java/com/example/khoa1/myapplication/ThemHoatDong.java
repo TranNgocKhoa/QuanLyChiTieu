@@ -67,19 +67,13 @@ public class ThemHoatDong extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         sqLiteThuChi = new SQLiteThuChi(this);
+        initComponent();
+        setListernerForComponent();
+    }
+    //Hàm khỏi tạo các thành phần trong activity
+    private void initComponent()
+    {
         myCalendar = Calendar.getInstance();
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            }
-
-        };
         myCalendar.setTime(myCalendar.getTime());
         tvChonLoaiHoatDong = (TextView) findViewById(R.id.tvChonLoaiHoatDong);
         imgChonLoaiHoatDong = (ImageView) findViewById(R.id.imageIconLoai);
@@ -92,6 +86,22 @@ public class ThemHoatDong extends AppCompatActivity{
         edTieuDe = (EditText) findViewById(R.id.edTieuDe);
         edNoiDung = (EditText) findViewById(R.id.edNoiDung);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        ratingBar.setEnabled(false);
+        imgButtonCamera.setEnabled(false);
+
+        MaHoatDong = getIntent().getIntExtra("MaHoatDong", -1);
+        thuNhap = getIntent().getBooleanExtra("ThuNhap", true);
+        if(MaHoatDong!=-1)
+        {
+            getHoatDong();
+        }
+        //Set back toolbar button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+    //Hàm set listener cho các thành phần
+    private void setListernerForComponent()
+    {
         tvChonLoaiHoatDong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,6 +109,18 @@ public class ThemHoatDong extends AppCompatActivity{
                 startActivityForResult(intent, 1);
             }
         });
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            }
+
+        };
         tvChonNgay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,23 +145,7 @@ public class ThemHoatDong extends AppCompatActivity{
                 startActivityForResult(intent, 3);
             }
         });
-
-        ratingBar.setEnabled(false);
-        imgButtonCamera.setEnabled(false);
-
-        MaHoatDong = getIntent().getIntExtra("MaHoatDong", -1);
-        thuNhap = getIntent().getBooleanExtra("ThuNhap", true);
-        if(MaHoatDong!=-1)
-        {
-            getHoatDong();
-        }
-
-        //Set back toolbar button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
     }
-
     private void getHoatDong() {
         if(!thuNhap)
         {
