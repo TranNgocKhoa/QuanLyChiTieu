@@ -7,4 +7,5 @@
     <color name="colorSecondaryDark">#808e95</color>
     <color name="colorSecondaryLight">#e2f1f8</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="control_background">#cc4285f4</color>
 </resources>

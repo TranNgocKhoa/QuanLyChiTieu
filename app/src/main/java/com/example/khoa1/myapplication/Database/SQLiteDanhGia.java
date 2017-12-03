@@ -32,7 +32,7 @@ public class SQLiteDanhGia extends SQLiteDataController {
 
             while (cs.moveToNext()) {
                 int MaDanhGia = cs.getInt(0);
-                byte[] HinhAnh = cs.getBlob(1);
+                String HinhAnh = cs.getString(1);
                 float KinhDo = cs.getFloat(2);
                 float ViDo = cs.getFloat(3);
                 int DanhGia = cs.getInt(4);
@@ -61,7 +61,7 @@ public class SQLiteDanhGia extends SQLiteDataController {
 
             while (cs.moveToNext()) {
                 int MaDanhGia = cs.getInt(0);
-                byte[] HinhAnh = cs.getBlob(1);
+                String HinhAnh = cs.getString(1);
                 float KinhDo = cs.getFloat(2);
                 float ViDo = cs.getFloat(3);
                 int DanhGia = cs.getInt(4);

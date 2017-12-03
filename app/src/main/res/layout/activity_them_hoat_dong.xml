@@ -162,9 +162,15 @@
         android:layout_below="@id/headerChiTietTk"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imgHinhAnh"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"/>
         <ImageButton
+            android:id="@+id/imgButtonCamera"
+            android:layout_below="@id/imgHinhAnh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

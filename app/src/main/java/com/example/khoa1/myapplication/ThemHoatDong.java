@@ -3,6 +3,8 @@ package com.example.khoa1.myapplication;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -28,6 +31,7 @@ import com.example.khoa1.myapplication.Model.ChiTieu;
 import com.example.khoa1.myapplication.Model.DanhGia;
 import com.example.khoa1.myapplication.Model.ThuNhap;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,12 +47,15 @@ public class ThemHoatDong extends AppCompatActivity{
     private EditText edTieuDe;
     private EditText edNoiDung;
     private ImageView imgChonLoaiHoatDong;
+    private ImageButton imgButtonCamera;
+    private ImageView imgHinhAnh;
     private  Calendar myCalendar;
     private SQLiteThuChi sqLiteThuChi;
     private Account TaiKhoan;
     private Category category;
     private RatingBar ratingBar;
     private DanhGia danhGia;
+    private String imgPath;
     private boolean thuNhap = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +81,8 @@ public class ThemHoatDong extends AppCompatActivity{
         tvChonNgay = (TextView) findViewById(R.id.tvChonNgay);
         tvChonTaiKhoan = (TextView) findViewById(R.id.tvChonTaiKhoan);
         imgChonTaiKhoan = (ImageView) findViewById(R.id.imageIconVi) ;
+        imgButtonCamera = (ImageButton) findViewById(R.id.imgButtonCamera);
+        imgHinhAnh = (ImageView) findViewById(R.id.imgHinhAnh);
         edSoTien = (EditText) findViewById(R.id.edSoTien);
         edTieuDe = (EditText) findViewById(R.id.edTieuDe);
         edNoiDung = (EditText) findViewById(R.id.edNoiDung);
@@ -101,6 +110,17 @@ public class ThemHoatDong extends AppCompatActivity{
                 startActivityForResult(intent, 2);
             }
         });
+        imgButtonCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ThemHoatDong.this, CameraActivity.class);
+                //startActivity(intent);
+                startActivityForResult(intent, 3);
+            }
+        });
+
+        ratingBar.setEnabled(false);
+        imgButtonCamera.setEnabled(false);
 
         //Set back toolbar button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -147,6 +167,7 @@ public class ThemHoatDong extends AppCompatActivity{
         if(thuNhap)
         {
             ThuNhap thuNhapRecord = new ThuNhap(0, soTien, myCalendar.getTime(), category, tieuDe, noiDung,TaiKhoan);
+
             sqLiteThuChi.addThuNhap(thuNhapRecord);
         }
         else
@@ -154,6 +175,7 @@ public class ThemHoatDong extends AppCompatActivity{
             danhGia = getDanhGia();
             ChiTieu chiTieuRecord = new ChiTieu(0, soTien, myCalendar.getTime(), category, tieuDe, noiDung, TaiKhoan, danhGia);
             sqLiteThuChi.addChiTieu(chiTieuRecord);
+
         }
     }
 
@@ -162,7 +184,7 @@ public class ThemHoatDong extends AppCompatActivity{
         DanhGia danhGia = null;
         if(ratingBar.getNumStars() > 0)
         {
-            danhGia = new DanhGia(0, null, 0.0f, 0.0f, ratingBar.getNumStars());
+            danhGia = new DanhGia(0, imgPath, 0.0f, 0.0f, ratingBar.getNumStars());
         }
         return danhGia;
     }
@@ -176,11 +198,15 @@ public class ThemHoatDong extends AppCompatActivity{
                 if(cat != null)
                 {
                     thuNhap = false;
+                    ratingBar.setEnabled(true);
+                    imgButtonCamera.setEnabled(true);
                     category = cat;
                 }
                 else
                 {
                     thuNhap = true;
+                    ratingBar.setEnabled(false);
+                    imgButtonCamera.setEnabled(false);
                     category = (Category) data.getSerializableExtra("LoaiThuNhap");
                 }
 
@@ -201,6 +227,29 @@ public class ThemHoatDong extends AppCompatActivity{
                 //Cập nhật account icon và tên
                 tvChonTaiKhoan.setText(TaiKhoan.getTenTaiKhoan());
                 imgChonTaiKhoan.setImageResource(TaiKhoan.getPicture());
+            }
+        }
+
+        if(requestCode == 3)
+        {
+            if(resultCode == RESULT_OK) {
+                String imgString = data.getStringExtra("Image");
+                if(imgString != null)
+                {
+                    imgPath = imgString;
+
+                    File imgFile = new  File(imgString);
+
+                    if(imgFile.exists()){
+
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+
+                        imgHinhAnh.setImageBitmap(myBitmap);
+
+                    }
+                }
+
             }
         }
     }

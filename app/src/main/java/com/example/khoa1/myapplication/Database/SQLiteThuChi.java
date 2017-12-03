@@ -308,4 +308,36 @@ public class SQLiteThuChi extends SQLiteDataController{
         return result;
     }
 
+    public ArrayList<HoatDong> getListThuChibyAccount_Day(int IDAccount, DateFormat NgayTT){
+        ArrayList<HoatDong> listchiTieu= new ArrayList<>();
+        ArrayList<Category> listLoaiThuChi =  getListLoaiThuChi();
+        ArrayList<Account> listAccount = getListAccount();
+        try{
+            openDataBase();
+            Cursor cs = database.rawQuery("SELECT sum(ChiTien.SoTienChi)\n" +
+                            "FROM ChiTien\n" +
+                            "Where Datedif(day,ChiTien.Ngay , '" + NgayTT + "')=0"
+                    ,null);
+            ChiTieu chiTieu;
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            Date date;
+            while (cs.moveToNext()) {
+
+                chiTieu = new ChiTieu(cs.getInt(0),
+                        cs.getInt(1),
+                        null, listLoaiThuChi.get(cs.getInt(3)),
+                        cs.getString(4),cs.getString(5),
+                        sqLiteAccount.getAccountByID(IDAccount),null);
+                Log.d("aaa",cs.getString(0));
+                listchiTieu.add(chiTieu);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return listchiTieu;
+    }
+
 }

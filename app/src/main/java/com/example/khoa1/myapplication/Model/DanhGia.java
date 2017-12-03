@@ -8,12 +8,12 @@ import java.io.Serializable;
 
 public class DanhGia implements Serializable{
     private int maDanhGia;
-    private byte[] hinhAnh;
+    private String hinhAnh;
     private float longtitude;
     private float latitude;
     private int rate;
 
-    public DanhGia(int maDanhGia, byte[] hinhAnh, float longtitude, float latitude, int rate) {
+    public DanhGia(int maDanhGia, String hinhAnh, float longtitude, float latitude, int rate) {
 
         this.maDanhGia = maDanhGia;
         this.hinhAnh = hinhAnh;
@@ -25,11 +25,11 @@ public class DanhGia implements Serializable{
     public DanhGia() {
     }
 
-    public byte[] getHinhAnh() {
+    public String getHinhAnh() {
         return hinhAnh;
     }
 
-    public void setHinhAnh(byte[] hinhAnh) {
+    public void setHinhAnh(String hinhAnh) {
         this.hinhAnh = hinhAnh;
     }
 
