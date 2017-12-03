@@ -93,10 +93,14 @@ public class ChiTieuFragment extends Fragment {
             Intent intent = new Intent(getActivity().getApplicationContext(),ChiTietHoatDong.class);
             //Truyen vao ma chi tieu cho Activity Chi Tiet Hoat Dong
             intent.putExtra("Ma Chi Tieu",((ChiTieu)lvChiTieu.getItemAtPosition(index)).getMaHoatDong());
+            intent.putExtra("ThuNhap",false);
            startActivity(intent);
         }
         else if(item.getTitle()=="Sửa"){
-            Toast.makeText(getContext(),"Sửa",Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getActivity().getApplicationContext(),ThemHoatDong.class);
+            intent.putExtra("MaHoatDong",((ChiTieu)lvChiTieu.getItemAtPosition(index)).getMaHoatDong());
+            intent.putExtra("ThuNhap",false);
+            startActivity(intent);
         }
         else if(item.getTitle()=="Xoá"){
             Toast.makeText(getContext(),"Sửa",Toast.LENGTH_LONG).show();

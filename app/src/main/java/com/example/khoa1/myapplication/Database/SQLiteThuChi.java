@@ -11,6 +11,7 @@ import android.util.Log;
 import com.example.khoa1.myapplication.Model.Account;
 import com.example.khoa1.myapplication.Model.Category;
 import com.example.khoa1.myapplication.Model.ChiTieu;
+import com.example.khoa1.myapplication.Model.DanhGia;
 import com.example.khoa1.myapplication.Model.HoatDong;
 import com.example.khoa1.myapplication.Model.ThuNhap;
 
@@ -32,6 +33,7 @@ public class SQLiteThuChi extends SQLiteDataController{
     SQLiteCategory sqLiteCategory;
     SQLiteDanhGia sqLiteDanhGia;
     Context context;
+    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
     public SQLiteThuChi(Context con)
     {
         super(con);
@@ -47,7 +49,6 @@ public class SQLiteThuChi extends SQLiteDataController{
             openDataBase();
             Cursor cs = database.rawQuery("select * from ThuTien",null);
             ThuNhap thuNhap;
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             Date date;
             while (cs.moveToNext()) {
                 thuNhap = new ThuNhap(cs.getInt(0),
@@ -68,15 +69,11 @@ public class SQLiteThuChi extends SQLiteDataController{
 
         return listThuNhap;
     }
-
-
-    public ArrayList<ChiTieu> getListChiTieu(){
-        ArrayList<ChiTieu> listChiTieu = new ArrayList<>();
+    public ChiTieu getChiTieuByID(int ID){
+        ChiTieu chiTieu = null;
         try{
             openDataBase();
-            Cursor cs = database.rawQuery("select * from ChiTien",null);
-            ChiTieu chiTieu;
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            Cursor cs = database.rawQuery("select * from ChiTien where MaChiTien = " + String.valueOf(ID),null);
             Date date;
             while (cs.moveToNext()) {
                 chiTieu = new ChiTieu(cs.getInt(0),
@@ -84,7 +81,61 @@ public class SQLiteThuChi extends SQLiteDataController{
                         df.parse(cs.getString(3)),
                         sqLiteCategory.getCategoryChiTieuByID(cs.getInt(1)),
                         cs.getString(5),cs.getString(4),
-                        sqLiteAccount.getAccountByID(cs.getInt(6)), null);
+                        sqLiteAccount.getAccountByID(cs.getInt(7)),
+                        sqLiteDanhGia.getDanhGiaByID(cs.getInt(6)));
+                Log.d("aaa",cs.getString(0));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return chiTieu;
+    }
+
+    public ThuNhap getThuNhapByID(int ID){
+        ThuNhap thuNhap = null;
+        try{
+            openDataBase();
+            Cursor cs = database.rawQuery("select * from ThuTien where MaThuTien = " + String.valueOf(ID),null);
+            Date date;
+            while (cs.moveToNext()) {
+                thuNhap = new ThuNhap(cs.getInt(0),
+                        cs.getDouble(2),
+                        df.parse(cs.getString(3)),
+                        sqLiteCategory.getCategoryThuNhapByID(cs.getInt(1)),
+                        cs.getString(5),cs.getString(4),
+                        sqLiteAccount.getAccountByID(cs.getInt(6)));
+                Log.d("aaa",cs.getString(0));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return thuNhap;
+    }
+
+    public ArrayList<ChiTieu> getListChiTieu(){
+        ArrayList<ChiTieu> listChiTieu = new ArrayList<>();
+        try{
+            openDataBase();
+            Cursor cs = database.rawQuery("select * from ChiTien",null);
+            ChiTieu chiTieu;
+            Date date;
+            while (cs.moveToNext()) {
+                chiTieu = new ChiTieu(cs.getInt(0),
+                        cs.getDouble(2),
+                        df.parse(cs.getString(3)),
+                        sqLiteCategory.getCategoryChiTieuByID(cs.getInt(1)),
+                        cs.getString(5),cs.getString(4),
+                        sqLiteAccount.getAccountByID(cs.getInt(7)), null);
                 Log.d("aaa",cs.getString(0));
                 listChiTieu.add(chiTieu);
             }
@@ -109,14 +160,13 @@ public class SQLiteThuChi extends SQLiteDataController{
                     "WHERE MaTaiKhoan = " + String.valueOf(ID)
                     , null);
             ChiTieu chiTieu;
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             while (cs.moveToNext()) {
                 chiTieu = new ChiTieu(cs.getInt(0),
                         cs.getDouble(2),
                         df.parse(cs.getString(3)),
                         sqLiteCategory.getCategoryChiTieuByID(cs.getInt(1)),
                         cs.getString(5),cs.getString(4),
-                        sqLiteAccount.getAccountByID(cs.getInt(6)), null);
+                        sqLiteAccount.getAccountByID(cs.getInt(7)), null);
                 Log.d("aaa",cs.getString(0));
 
                 arrChiTieu.add(chiTieu);
@@ -137,7 +187,7 @@ public class SQLiteThuChi extends SQLiteDataController{
                             "WHERE MaTaiKhoan = " + String.valueOf(ID)
                     , null);
             ThuNhap thuNhap;
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+//            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.fff");
             while (cs.moveToNext()) {
                 thuNhap = new ThuNhap(cs.getInt(0),
                         cs.getDouble(2),
@@ -157,15 +207,13 @@ public class SQLiteThuChi extends SQLiteDataController{
             close();
         }
 
-
-
         ArrayList<HoatDong> arrHoatDong = new ArrayList<HoatDong>();
         arrHoatDong.addAll(arrChiTieu);
         arrHoatDong.addAll(arrThuNhap);
         Collections.sort(arrHoatDong, new Comparator<HoatDong>() {
             @Override
             public int compare(HoatDong hoatDong, HoatDong t1) {
-                return hoatDong.getNgay().compareTo(t1.getNgay());
+                return - hoatDong.getNgay().compareTo(t1.getNgay());
             }
         });
         return  arrHoatDong;
@@ -227,7 +275,7 @@ public class SQLiteThuChi extends SQLiteDataController{
                             "FROM ChiTien\n"
                     ,null);
             ChiTieu chiTieu;
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+//            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.fff");
             Date date;
             while (cs.moveToNext()) {
 
@@ -251,7 +299,6 @@ public class SQLiteThuChi extends SQLiteDataController{
 
     public boolean addChiTieu(ChiTieu chiTieu)
     {
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         boolean result = false;
         try {
 
@@ -264,8 +311,9 @@ public class SQLiteThuChi extends SQLiteDataController{
             values.put("Ngay", df.format(chiTieu.getNgay()));
             values.put("ChiTiet", chiTieu.getNoiDung());
             values.put("TieuDe", chiTieu.getTieuDe());
-            values.put("MaDanhGia", maDanhGia);
             values.put("MaTaiKhoan", chiTieu.getTaiKhoan().getMaTaiKhoan());
+            values.put("MaDanhGia", maDanhGia);
+
             //  values.put("SoTienNo", account.getAccountType().getId());
             long rs = database.insert("ChiTien", null, values);
             if (rs > 0) {
@@ -282,7 +330,6 @@ public class SQLiteThuChi extends SQLiteDataController{
 
     public boolean addThuNhap(ThuNhap thuNhap)
     {
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         boolean result = false;
         try {
 
@@ -319,7 +366,7 @@ public class SQLiteThuChi extends SQLiteDataController{
                             "Where Datedif(day,ChiTien.Ngay , '" + NgayTT + "')=0"
                     ,null);
             ChiTieu chiTieu;
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.fff");
             Date date;
             while (cs.moveToNext()) {
 
@@ -340,4 +387,31 @@ public class SQLiteThuChi extends SQLiteDataController{
         return listchiTieu;
     }
 
+    public boolean updateChiTieu(ChiTieu chiTieu) {
+        boolean result = false;
+        try {
+            openDataBase();
+            sqLiteDanhGia.updateDanhGia(chiTieu.getDanhGia());
+            ContentValues values = new ContentValues();
+            values.put("MaLoaiChiTien", chiTieu.getCategory().getMaLoai());
+            values.put("SoTienChi", chiTieu.getSoTien());
+            values.put("Ngay", df.format(chiTieu.getNgay()));
+            values.put("ChiTiet", chiTieu.getNoiDung());
+            values.put("TieuDe", chiTieu.getTieuDe());
+            values.put("MaTaiKhoan", chiTieu.getTaiKhoan().getMaTaiKhoan());
+            values.put("MaDanhGia", chiTieu.getDanhGia().getMaDanhGia());
+
+            //  values.put("SoTienNo", account.getAccountType().getId());
+            long rs = database.update("ChiTien", values, "MaChiTien=?",  new String[]{String.valueOf(chiTieu.getMaHoatDong())});
+            if (rs > 0) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        Log.d("aaa","finish");
+        return result;
+    }
 }

@@ -57,10 +57,15 @@ public class ThemHoatDong extends AppCompatActivity{
     private DanhGia danhGia;
     private String imgPath;
     private boolean thuNhap = true;
+    private int MaHoatDong;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_hoat_dong);
+        //Set back toolbar button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         sqLiteThuChi = new SQLiteThuChi(this);
         myCalendar = Calendar.getInstance();
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -122,10 +127,63 @@ public class ThemHoatDong extends AppCompatActivity{
         ratingBar.setEnabled(false);
         imgButtonCamera.setEnabled(false);
 
+        MaHoatDong = getIntent().getIntExtra("MaHoatDong", -1);
+        thuNhap = getIntent().getBooleanExtra("ThuNhap", true);
+        if(MaHoatDong!=-1)
+        {
+            getHoatDong();
+        }
+
         //Set back toolbar button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+    }
+
+    private void getHoatDong() {
+        if(!thuNhap)
+        {
+            ratingBar.setEnabled(true);
+            imgButtonCamera.setEnabled(true);
+           ChiTieu chiTieu = sqLiteThuChi.getChiTieuByID(MaHoatDong);
+           if(chiTieu!= null)
+           {
+               tvChonTaiKhoan.setText(chiTieu.getTaiKhoan().getTenTaiKhoan());
+               imgChonTaiKhoan.setImageResource(chiTieu.getTaiKhoan().getPicture());
+               TaiKhoan = chiTieu.getTaiKhoan();
+               tvChonLoaiHoatDong.setText(chiTieu.getCategory().getTenLoai());
+               imgChonLoaiHoatDong.setImageResource(chiTieu.getCategory().getImage());
+               category = chiTieu.getCategory();
+               ratingBar.setNumStars(chiTieu.getDanhGia().getRate());
+               danhGia = chiTieu.getDanhGia();
+               imgPath = chiTieu.getDanhGia().getHinhAnh();
+
+               if(imgPath!=null)
+               {File imgFile = new File(imgPath);
+
+               if(imgFile.exists()){
+
+                   Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                   imgHinhAnh.setImageBitmap(myBitmap);
+               }}
+           }
+        }
+
+        else
+        {
+            ratingBar.setEnabled(false);
+            imgButtonCamera.setEnabled(false);
+            ThuNhap thuNhap = sqLiteThuChi.getThuNhapByID(MaHoatDong);
+            if(thuNhap!= null)
+            {
+                tvChonTaiKhoan.setText(thuNhap.getTaiKhoan().getTenTaiKhoan());
+                imgChonTaiKhoan.setImageResource(thuNhap.getTaiKhoan().getPicture());
+                TaiKhoan = thuNhap.getTaiKhoan();
+                tvChonLoaiHoatDong.setText(thuNhap.getCategory().getTenLoai());
+                imgChonLoaiHoatDong.setImageResource(thuNhap.getCategory().getImage());
+                category = thuNhap.getCategory();
+            }
+        }
     }
 
     @Override
@@ -143,6 +201,9 @@ public class ThemHoatDong extends AppCompatActivity{
     {
         // Handle item selection
         switch (item.getItemId()) {
+            case  android.R.id.home:
+                this.finish();
+                return true;
             case R.id.action_favorite:
                 try {
                     saveMenuClick();
@@ -163,7 +224,7 @@ public class ThemHoatDong extends AppCompatActivity{
         double soTien = Double.parseDouble(edSoTien.getText().toString());
         String tieuDe = edTieuDe.getText().toString();
         String noiDung = edNoiDung.getText().toString();
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
         if(thuNhap)
         {
             ThuNhap thuNhapRecord = new ThuNhap(0, soTien, myCalendar.getTime(), category, tieuDe, noiDung,TaiKhoan);
@@ -173,8 +234,11 @@ public class ThemHoatDong extends AppCompatActivity{
         else
         {
             danhGia = getDanhGia();
-            ChiTieu chiTieuRecord = new ChiTieu(0, soTien, myCalendar.getTime(), category, tieuDe, noiDung, TaiKhoan, danhGia);
-            sqLiteThuChi.addChiTieu(chiTieuRecord);
+            ChiTieu chiTieuRecord = new ChiTieu(MaHoatDong, soTien, myCalendar.getTime(), category, tieuDe, noiDung, TaiKhoan, danhGia);
+            if(MaHoatDong==-1)
+                sqLiteThuChi.addChiTieu(chiTieuRecord);
+            else
+                sqLiteThuChi.updateChiTieu(chiTieuRecord);
 
         }
     }
@@ -184,7 +248,11 @@ public class ThemHoatDong extends AppCompatActivity{
         DanhGia danhGia = null;
         if(ratingBar.getNumStars() > 0)
         {
-            danhGia = new DanhGia(0, imgPath, 0.0f, 0.0f, ratingBar.getNumStars());
+            int maDanhgia =0;
+            if(MaHoatDong!=-1)
+            maDanhgia = sqLiteThuChi.getChiTieuByID(MaHoatDong).getDanhGia().getMaDanhGia();
+
+            danhGia = new DanhGia(maDanhgia, imgPath, 0.0f, 0.0f, ratingBar.getNumStars());
         }
         return danhGia;
     }

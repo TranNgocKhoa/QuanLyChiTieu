@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -18,6 +21,7 @@ import com.example.khoa1.myapplication.Adapter.ThuNhapAdapter;
 import com.example.khoa1.myapplication.Database.SQLiteDataController;
 import com.example.khoa1.myapplication.Database.SQLiteThuChi;
 import com.example.khoa1.myapplication.Model.Category;
+import com.example.khoa1.myapplication.Model.ChiTieu;
 import com.example.khoa1.myapplication.Model.ThuNhap;
 
 import java.io.IOException;
@@ -39,6 +43,7 @@ public class ThuNhapFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_thunhap, container, false);
         sqLiteThuChi = new SQLiteThuChi(getContext());
         lvThuNhap = (ListView) rootView.findViewById(R.id.lvThuNhap);
+        registerForContextMenu(lvThuNhap);
         fabThuNhap = (FloatingActionButton) rootView.findViewById(R.id.fabThuNhap);
         fabThuNhap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +68,16 @@ public class ThuNhapFragment extends Fragment {
 //lvAccount.setAdapter(arAdp);
         return rootView;
     }
-
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Lựa chọn:");
+        //groupId, itemId, order, title
+        menu.add(0, v.getId(), 0, "Xem");
+        menu.add(0, v.getId(), 0, "Sửa");
+        menu.add(0, v.getId(), 0, "Xoá");
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 0) {
@@ -72,6 +86,33 @@ public class ThuNhapFragment extends Fragment {
             ThuNhapAdapter thuNhapAdapter = new ThuNhapAdapter(getActivity(), R.layout.chitieu_listview, arrThuNhap);
             lvThuNhap.setAdapter(thuNhapAdapter);
         }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item){
+        //Lay vi tri click
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int index = info.position;
+        if(item.getTitle()=="Xem"){
+            Intent intent = new Intent(getActivity().getApplicationContext(),ChiTietHoatDong.class);
+            //Truyen vao ma chi tieu cho Activity Chi Tiet Hoat Dong
+            intent.putExtra("Ma Chi Tieu",((ThuNhap)lvThuNhap.getItemAtPosition(index)).getMaHoatDong());
+            intent.putExtra("ThuNhap",true);
+            startActivity(intent);
+        }
+        else if(item.getTitle()=="Sửa"){
+            Intent intent = new Intent(getActivity().getApplicationContext(),ThemHoatDong.class);
+            intent.putExtra("MaHoatDong",((ThuNhap)lvThuNhap.getItemAtPosition(index)).getMaHoatDong());
+            intent.putExtra("ThuNhap",true);
+            startActivity(intent);
+        }
+        else if(item.getTitle()=="Xoá"){
+            Toast.makeText(getContext(),"Sửa",Toast.LENGTH_LONG).show();
+        }
+        else{
+            return false;
+        }
+        return true;
     }
 
 }
