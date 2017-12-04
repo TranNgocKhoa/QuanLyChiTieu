@@ -29,7 +29,8 @@ public class SQLiteCategory extends SQLiteDataController {
 
         try {
             openDataBase();
-            Cursor cs = database.rawQuery("SELECT LoaiChiTien.MaLoai,LoaiChiTien.TenLoai,LoaiChiTien.Image,Count(LoaiChiTien.TenLoai),Sum(ChiTien.SoTienChi)\n" +
+            Cursor cs = database.rawQuery("SELECT LoaiChiTien.MaLoai," +
+                            "LoaiChiTien.TenLoai,LoaiChiTien.Image,Count(LoaiChiTien.TenLoai),Sum(ChiTien.SoTienChi)\n" +
                             "FROM ChiTien,LoaiChiTien\n" +
                             "Where ChiTien.MaLoaiChiTien=LoaiChiTien.MaLoai\n" +
                             "GROUP BY LoaiChiTien.TenLoai"
@@ -43,6 +44,33 @@ public class SQLiteCategory extends SQLiteDataController {
                 int TongTien= cs.getInt(4);
                 Log.d("Infor",TenLoai+' ' +Integer.toString(TongTien));
                 CategoryCount cat = new CategoryCount(MaChiTien, TenLoai, Image,SoLuong,TongTien);
+                arrCategory.add(cat);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return arrCategory;
+    }
+    public ArrayList<Category> getListCategorybyLoaiChiTieu(String TenLoaiChiTieu) {
+        ArrayList<Category> arrCategory = new ArrayList<>();
+
+        try {
+            openDataBase();
+            Cursor cs = database.rawQuery("SELECT LoaiChiTien.MaLoai,LoaiChiTien.TenLoai,LoaiChiTien.Image\n" +
+                            "FROM ChiTien,LoaiChiTien\n" +
+                            "Where ChiTien.MaLoaiChiTien=LoaiChiTien.MaLoai and TenLoai='" + TenLoaiChiTieu + "'\n" +
+                            "GROUP BY LoaiChiTien.TenLoai"
+                    , null);
+
+            while (cs.moveToNext()) {
+                int MaChiTien = cs.getInt(0);
+                String TenLoai = cs.getString(1);
+                int Image = cs.getInt(2);
+                Log.d("Infor",TenLoai);
+                Category cat = new Category(MaChiTien, TenLoai, Image);
                 arrCategory.add(cat);
             }
 
