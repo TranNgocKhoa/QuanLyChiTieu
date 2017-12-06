@@ -9,10 +9,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.khoa1.myapplication.Adapter.CategoryAdapter;
+import com.example.khoa1.myapplication.Adapter.ChiTieuAdapter;
+import com.example.khoa1.myapplication.Database.SQLiteCategory;
 import com.example.khoa1.myapplication.Database.SQLiteThuChi;
+import com.example.khoa1.myapplication.Model.Category;
+import com.example.khoa1.myapplication.Model.CategoryCount;
 import com.example.khoa1.myapplication.Model.ChiTieu;
+import com.example.khoa1.myapplication.Model.HoatDong;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -26,27 +33,32 @@ import java.util.ArrayList;
 
 
 public class ThongKeFragment extends Fragment {
-    private ArrayList<ChiTieu> listChiTieu;
-    private SQLiteThuChi sqLiteThuChi;
+    SQLiteCategory sqlcategory;
+    SQLiteThuChi sqlthuchi;
+    private ListView listChiTieu;
+    ArrayList<ChiTieu> listchi;
     private static String TAG = "ThongKeFragment";
     private ArrayList listarr = new ArrayList();
-    private float[] yData ={25.3f, 10.6f, 66.76f, 44.32f, 46.01f, 16.89f, 23.9f};
-    private String[] xData = {"Mitch", "Jessica" , "Mohammad" , "Kelsey", "Sam", "Robert", "Ashley"};
     PieChart pieChart;
-
+    ArrayList<CategoryCount> list;
+    ListView lvChitieu;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+
         View rootView = inflater.inflate(R.layout.fragment_thongke, container, false);
-        sqLiteThuChi = new SQLiteThuChi(getContext());
         // final float[] yData = {25.3f, 10.6f, 66.76f, 44.32f, 46.01f, 16.89f, 23.9f};
-        listChiTieu=sqLiteThuChi.getListChiTieu();
+        lvChitieu=(ListView) rootView.findViewById(R.id.listViewChiTieu);
+        sqlcategory = new SQLiteCategory(getContext());
+        sqlthuchi = new SQLiteThuChi(getContext());
+        list=sqlcategory.getListCategoryCount();
+
+        listchi = sqlthuchi.getListChiTieu();
+        ChiTieuAdapter chiTieuAdapter = new ChiTieuAdapter(getActivity(), R.layout.chitieu_listview, listchi);
+        lvChitieu.setAdapter(chiTieuAdapter);
         Log.d(TAG, "onCreate: starting to create chart");
-        listarr.add(25f);
-        listarr.add( 10f);
-        listarr.add(65f);
         pieChart = (PieChart) rootView.findViewById(R.id.idPieChart);
-        pieChart.setDescription("Sales by employee (In Thousands $) ");
+        pieChart.setDescription("Biểu đồ chi tiêu theo lựa chọn");
         pieChart.setRotationEnabled(true);
         //pieChart.setUsePercentValues(true);
         //pieChart.setHoleColor(Color.BLUE);
@@ -64,19 +76,11 @@ public class ThongKeFragment extends Fragment {
             public void onValueSelected(Entry e, Highlight h) {
                 Log.d(TAG, "onValueSelected: Value select from chart.");
                 Log.d(TAG, "onValueSelected: " + e.toString());
-                Log.d(TAG, "onValueSelected: " + h.toString());
+                Log.d(TAG, "onValueSelected: " + list.get((int)h.getX()).getTenLoai());
 
-                int pos1 = e.toString().indexOf("(sum): ");
-                String sales = e.toString().substring(pos1 + 7);
-
-                for(int i = 0; i < yData.length; i++){
-                    if(yData[i] == Float.parseFloat(sales)){
-                        pos1 = i;
-                        break;
-                    }
-                }
-                String employee = xData[pos1 + 1];
-                Toast.makeText(getActivity(), "Employee " + employee + "\n" + "Sales: $" + sales + "K", Toast.LENGTH_LONG).show();
+                String TenLoai= list.get((int)h.getX()).getTenLoai();
+                int TongTien= list.get((int)h.getX()).getTongTien();
+                Toast.makeText(getActivity(), "Tên loại " +  TenLoai +"\nTổng tiền " + Integer.toString(TongTien), Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -88,19 +92,23 @@ public class ThongKeFragment extends Fragment {
     }
 
 
+    private void addDataListView(){
+        Log.d(TAG,"addDataListView started");
+
+    }
     private void addDataSet() {
         Log.d(TAG, "addDataSet started");
         ArrayList<PieEntry> yEntrys = new ArrayList<>();
         ArrayList<String> xEntrys = new ArrayList<>();
-
-        for(int i = 0; i < yData.length; i++){
-            yEntrys.add(new PieEntry(yData[i] , i));
+        int Sum=0;
+        for (int i=0;i< list.size();i++){
+            Sum+=list.get(i).getTongTien();
+            xEntrys.add(list.get(i).getTenLoai());
         }
 
-        for(int i = 1; i < xData.length; i++){
-            xEntrys.add(xData[i]);
+        for(int i = 0; i < list.size(); i++) {
+            yEntrys.add(new PieEntry(list.get(i).getTongTien()*100/Sum, i));
         }
-
         //create the data set
         PieDataSet pieDataSet = new PieDataSet(yEntrys, "Employee Sales");
         pieDataSet.setSliceSpace(2);

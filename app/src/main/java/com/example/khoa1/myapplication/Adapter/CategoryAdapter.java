@@ -24,6 +24,7 @@ public class CategoryAdapter extends ArrayAdapter {
     private int resource;
     private ArrayList<Category> arrCat;
 
+
     public CategoryAdapter(Context context, int resource, ArrayList<Category> arrCat) {
         super(context, resource, arrCat);
         this.context = context;
