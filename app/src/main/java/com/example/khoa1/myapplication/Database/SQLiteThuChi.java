@@ -149,6 +149,33 @@ public class SQLiteThuChi extends SQLiteDataController{
 
         return listChiTieu;
     }
+    public ArrayList<ChiTieu> getListChiTieubyCategory(int CatID){
+        ArrayList<ChiTieu> listChiTieu = new ArrayList<>();
+        try{
+            openDataBase();
+            Cursor cs = database.rawQuery("select * from ChiTien where MaLoaiChiTien="+CatID,null);
+            ChiTieu chiTieu;
+            Date date;
+            while (cs.moveToNext()) {
+                chiTieu = new ChiTieu(cs.getInt(0),
+                        cs.getDouble(2),
+                        df.parse(cs.getString(3)),
+                        sqLiteCategory.getCategoryChiTieuByID(cs.getInt(1)),
+                        cs.getString(5),cs.getString(4),
+                        sqLiteAccount.getAccountByID(cs.getInt(7)), null);
+                Log.d("aaa",cs.getString(0));
+                listChiTieu.add(chiTieu);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return listChiTieu;
+    }
 
     public ArrayList<HoatDong> getListHoatDongByAccountID(int ID) {
         ArrayList<ChiTieu> arrChiTieu = new ArrayList<>();

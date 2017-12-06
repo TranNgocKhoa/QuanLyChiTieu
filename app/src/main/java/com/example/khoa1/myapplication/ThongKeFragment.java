@@ -58,7 +58,7 @@ public class ThongKeFragment extends Fragment {
         lvChitieu.setAdapter(chiTieuAdapter);
         Log.d(TAG, "onCreate: starting to create chart");
         pieChart = (PieChart) rootView.findViewById(R.id.idPieChart);
-        pieChart.setDescription("Biểu đồ chi tiêu theo lựa chọn");
+        pieChart.setDescription("Biểu đồ chi tiêu theo %");
         pieChart.setRotationEnabled(true);
         //pieChart.setUsePercentValues(true);
         //pieChart.setHoleColor(Color.BLUE);
@@ -79,6 +79,9 @@ public class ThongKeFragment extends Fragment {
                 Log.d(TAG, "onValueSelected: " + list.get((int)h.getX()).getTenLoai());
 
                 String TenLoai= list.get((int)h.getX()).getTenLoai();
+                listchi = sqlthuchi.getListChiTieubyCategory(list.get((int)h.getX()).getMaLoai());
+                ChiTieuAdapter chiTieuAdapter = new ChiTieuAdapter(getActivity(), R.layout.chitieu_listview, listchi);
+                lvChitieu.setAdapter(chiTieuAdapter);
                 int TongTien= list.get((int)h.getX()).getTongTien();
                 Toast.makeText(getActivity(), "Tên loại " +  TenLoai +"\nTổng tiền " + Integer.toString(TongTien), Toast.LENGTH_LONG).show();
             }
