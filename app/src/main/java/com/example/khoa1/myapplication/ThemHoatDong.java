@@ -258,7 +258,7 @@ public class ThemHoatDong extends AppCompatActivity{
             if(MaHoatDong!=-1)
             maDanhgia = sqLiteThuChi.getChiTieuByID(MaHoatDong).getDanhGia().getMaDanhGia();
 
-            danhGia = new DanhGia(maDanhgia, imgPath, 0.0f, 0.0f, ratingBar.getNumStars());
+            danhGia = new DanhGia(maDanhgia, imgPath, 0.0f, 0.0f,(int) ratingBar.getRating());
         }
         return danhGia;
     }

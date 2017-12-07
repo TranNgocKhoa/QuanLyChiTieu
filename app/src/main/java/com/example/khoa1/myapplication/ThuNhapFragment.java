@@ -65,6 +65,15 @@ public class ThuNhapFragment extends Fragment {
 
         ThuNhapAdapter thuNhapAdapter = new ThuNhapAdapter(getActivity(), R.layout.chitieu_listview, arrThuNhap);
         lvThuNhap.setAdapter(thuNhapAdapter);
+        lvThuNhap.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity().getApplicationContext(),ChiTietHoatDong.class);
+                //Truyen vao ma thu nhap cho Activity Chi Tiet Hoat Dong
+                intent.putExtra("Ma Thu Nhap",((ThuNhap)adapterView.getItemAtPosition(i)).getMaHoatDong());
+                startActivity(intent);
+            }
+        });
 //lvAccount.setAdapter(arAdp);
         return rootView;
     }

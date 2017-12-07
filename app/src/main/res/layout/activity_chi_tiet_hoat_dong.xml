@@ -23,6 +23,7 @@
             android:scaleType="centerCrop"/>
 
         <TextView
+            android:id="@+id/tvTieuDeHoatDong"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ăn Phở ở Ngã tư Thủ Đức"
@@ -51,6 +52,7 @@
                 android:textSize="16sp"
                 />
             <ImageView
+                android:id="@+id/imgCategoryHoatDong"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:background="@drawable/anuong"
@@ -68,6 +70,7 @@
         android:background="#EEEEEE">
 
         <TextView
+            android:id="@+id/tvSoTien"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="200.000"
@@ -95,6 +98,7 @@
         android:layout_weight="1"
         android:background="#F5F5F5">
         <TextView
+            android:id="@+id/tvNoiDung"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryDark"
