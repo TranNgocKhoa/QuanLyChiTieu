@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -91,6 +92,12 @@ public class ThemHoatDong extends AppCompatActivity{
 
         MaHoatDong = getIntent().getIntExtra("MaHoatDong", -1);
         thuNhap = getIntent().getBooleanExtra("ThuNhap", true);
+        TaiKhoan = (Account) getIntent().getSerializableExtra("MaTaiKhoan");
+        if(TaiKhoan!= null)
+        {
+            tvChonTaiKhoan.setText(TaiKhoan.getTenTaiKhoan());
+            imgChonTaiKhoan.setImageResource(TaiKhoan.getPicture());
+        }
         if(MaHoatDong!=-1)
         {
             getHoatDong();
@@ -145,8 +152,10 @@ public class ThemHoatDong extends AppCompatActivity{
                 startActivityForResult(intent, 3);
             }
         });
+
     }
     private void getHoatDong() {
+
         if(!thuNhap)
         {
             ratingBar.setEnabled(true);
@@ -160,10 +169,12 @@ public class ThemHoatDong extends AppCompatActivity{
                tvChonLoaiHoatDong.setText(chiTieu.getCategory().getTenLoai());
                imgChonLoaiHoatDong.setImageResource(chiTieu.getCategory().getImage());
                category = chiTieu.getCategory();
-               ratingBar.setNumStars(chiTieu.getDanhGia().getRate());
+               ratingBar.setRating(chiTieu.getDanhGia().getRate());
                danhGia = chiTieu.getDanhGia();
                imgPath = chiTieu.getDanhGia().getHinhAnh();
-
+               edTieuDe.setText(chiTieu.getTieuDe());
+               edNoiDung.setText(chiTieu.getNoiDung());
+               edSoTien.setText(String.valueOf(chiTieu.getSoTien()));
                if(imgPath!=null)
                {File imgFile = new File(imgPath);
 
@@ -188,6 +199,9 @@ public class ThemHoatDong extends AppCompatActivity{
                 tvChonLoaiHoatDong.setText(thuNhap.getCategory().getTenLoai());
                 imgChonLoaiHoatDong.setImageResource(thuNhap.getCategory().getImage());
                 category = thuNhap.getCategory();
+                edTieuDe.setText(thuNhap.getTieuDe());
+                edNoiDung.setText(thuNhap.getNoiDung());
+                edSoTien.setText(String.valueOf(thuNhap.getSoTien()));
             }
         }
     }
@@ -227,6 +241,7 @@ public class ThemHoatDong extends AppCompatActivity{
 
     private void saveMenuClick() throws ParseException {
 
+        if(edSoTien.getText().length() == 0) edSoTien.setText("0");
         double soTien = Double.parseDouble(edSoTien.getText().toString());
         String tieuDe = edTieuDe.getText().toString();
         String noiDung = edNoiDung.getText().toString();

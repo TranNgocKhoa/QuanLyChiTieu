@@ -4,7 +4,11 @@ package com.example.khoa1.myapplication;
  * Created by khoa1 on 10/30/2017.
  */
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -34,6 +38,9 @@ public class ThuNhapFragment extends Fragment {
     private ListView lvThuNhap;
     private FloatingActionButton fabThuNhap;
     private SQLiteThuChi sqLiteThuChi;
+    private Handler handlerSetDataListview;
+
+    private static final int MSG_SET_DATA_SUCCESS = 1;
     public ThuNhapFragment() {
     }
 
@@ -52,31 +59,51 @@ public class ThuNhapFragment extends Fragment {
                 startActivityForResult(intent, 0);
             }
         });
-        SQLiteDataController sqLiteDataController = new SQLiteDataController(getContext());
-        try {
-            sqLiteDataController.isCreatedDatabase();
-            sqLiteDataController.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        ArrayList<ThuNhap> arrThuNhap = sqLiteThuChi.getListThuNhap();
 
-        Toast.makeText(getContext(), String.valueOf(arrThuNhap.size()), Toast.LENGTH_LONG).show();
-
-        ThuNhapAdapter thuNhapAdapter = new ThuNhapAdapter(getActivity(), R.layout.chitieu_listview, arrThuNhap);
-        lvThuNhap.setAdapter(thuNhapAdapter);
-        lvThuNhap.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity().getApplicationContext(),ChiTietHoatDong.class);
-                //Truyen vao ma thu nhap cho Activity Chi Tiet Hoat Dong
-                intent.putExtra("Ma Thu Nhap",((ThuNhap)adapterView.getItemAtPosition(i)).getMaHoatDong());
-                startActivity(intent);
+        handlerSetDataListview = new Handler() {
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (msg.what == MSG_SET_DATA_SUCCESS) {
+                    ThuNhapAdapter thuNhapAdapter = new ThuNhapAdapter(getActivity(), R.layout.chitieu_listview,
+                            (ArrayList<ThuNhap>) msg.obj);
+                    lvThuNhap.setAdapter(thuNhapAdapter);
+                    lvThuNhap.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Intent intent = new Intent(getActivity().getApplicationContext(),ChiTietHoatDong.class);
+                            //Truyen vao ma thu nhap cho Activity Chi Tiet Hoat Dong
+                            intent.putExtra("Ma Thu Nhap",((ThuNhap)adapterView.getItemAtPosition(i)).getMaHoatDong());
+                            startActivity(intent);
+                        }
+                    });
+                }
             }
-        });
-//lvAccount.setAdapter(arAdp);
+        };
+        setDataListView();
         return rootView;
     }
+
+    private void setDataListView() {
+
+        Thread th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<ThuNhap> arrThuNhap = sqLiteThuChi.getListThuNhap();
+                ThuNhapAdapter thuNhapAdapter = new ThuNhapAdapter(getActivity(), R.layout.chitieu_listview, arrThuNhap);
+                //lấy message từ Main thread
+                Message msg = handlerSetDataListview.obtainMessage();
+                msg.what = MSG_SET_DATA_SUCCESS;
+                msg.obj = arrThuNhap;
+                //gửi lại Message này về cho Main Thread
+                handlerSetDataListview.sendMessage(msg);
+
+            }
+        });
+
+        //kích hoạt tiến trình
+        th.start();
+    }
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
     {

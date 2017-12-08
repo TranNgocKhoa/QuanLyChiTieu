@@ -3,6 +3,8 @@ package com.example.khoa1.myapplication;
 import android.content.Intent;
 import android.icu.text.IDNA;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -17,11 +19,13 @@ import android.widget.Toast;
 
 import com.example.khoa1.myapplication.Adapter.AccountAdapter;
 import com.example.khoa1.myapplication.Adapter.ChiTieuAdapter;
+import com.example.khoa1.myapplication.Adapter.ThuNhapAdapter;
 import com.example.khoa1.myapplication.Database.SQLiteThuChi;
 import com.example.khoa1.myapplication.Model.Account;
 import com.example.khoa1.myapplication.Model.AccountType;
 import com.example.khoa1.myapplication.Model.Category;
 import com.example.khoa1.myapplication.Model.ChiTieu;
+import com.example.khoa1.myapplication.Model.ThuNhap;
 
 import java.util.ArrayList;
 
@@ -32,6 +36,8 @@ public class ChiTieuFragment extends Fragment {
     private ListView lvChiTieu;
     private FloatingActionButton fabChiTieu;
     private SQLiteThuChi sqLiteThuChi;
+    private Handler handlerSetDataListview;
+    private static final int MSG_SET_DATA_SUCCESS = 1;
     public ChiTieuFragment() {
     }
 
@@ -41,7 +47,7 @@ public class ChiTieuFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_chitieu, container, false);
         sqLiteThuChi = new SQLiteThuChi(getContext());
         lvChiTieu = (ListView) rootView.findViewById(R.id.lvChiTieu);
-        lvChiTieu.setOnItemClickListener(new ListViewOnItemClickListener());
+
         registerForContextMenu(lvChiTieu);
 
 
@@ -53,14 +59,38 @@ public class ChiTieuFragment extends Fragment {
                 startActivityForResult(intent, 0);
             }
         });
-        ArrayList<ChiTieu> arrChiTieu = new ArrayList<ChiTieu>();
-        arrChiTieu = sqLiteThuChi.getListChiTieu();
 
-
-        ChiTieuAdapter chiTieuAdapter = new ChiTieuAdapter(getActivity(), R.layout.chitieu_listview, arrChiTieu);
-        lvChiTieu.setAdapter(chiTieuAdapter);
-//lvAccount.setAdapter(arAdp);
+        handlerSetDataListview = new Handler() {
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (msg.what == MSG_SET_DATA_SUCCESS) {
+                    ChiTieuAdapter chiTieuAdapter = new ChiTieuAdapter(getActivity(), R.layout.chitieu_listview,
+                            (ArrayList<ChiTieu>) msg.obj);
+                    lvChiTieu.setAdapter(chiTieuAdapter);
+                    lvChiTieu.setOnItemClickListener(new ListViewOnItemClickListener());
+                }
+            }
+        };
+        setDataListView();
         return rootView;
+    }
+
+
+    private void setDataListView() {
+        Thread th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<ChiTieu> arrChiTieu = sqLiteThuChi.getListChiTieu();
+                //lấy message từ Main thread
+                Message msg = handlerSetDataListview.obtainMessage();
+                msg.what = MSG_SET_DATA_SUCCESS;
+                msg.obj = arrChiTieu;
+                //gửi lại Message này về cho Main Thread
+                handlerSetDataListview.sendMessage(msg);
+            }
+        });
+        //kích hoạt tiến trình
+        th.start();
     }
 
     @Override

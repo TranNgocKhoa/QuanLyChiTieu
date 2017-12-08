@@ -74,7 +74,6 @@ public class ChiTietHoatDong extends AppCompatActivity {
         imgCategoryHoatDong.setImageResource(hoatDong.getCategory().getImage());
         tvSoTien.setText(String.valueOf(hoatDong.getSoTien()));
         tvNoiDung.setText(hoatDong.getNoiDung());
-
         if (!ThuNhap) {
             ratingBar.setRating(((ChiTieu) hoatDong).getDanhGia().getRate());
             String pathImg = ((ChiTieu) hoatDong).getDanhGia().getHinhAnh();
@@ -83,12 +82,8 @@ public class ChiTietHoatDong extends AppCompatActivity {
             imgFile = new File(pathImg);
 
             if (imgFile != null && imgFile.exists()) {
-
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-
-
                 imgDetail.setImageBitmap(myBitmap);
-
             }
         }
     }
