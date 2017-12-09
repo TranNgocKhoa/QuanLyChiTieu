@@ -14,6 +14,12 @@
         <item>Thống kê</item>
     </string-array>
 
+    <string-array name="spinner_array">
+        <item>Tất cả</item>
+        <item>Ngày</item>
+        <item>Tháng</item>
+        <item>Năm</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_chon_loai_hoat_dong">ChonLoaiHoatDong</string>

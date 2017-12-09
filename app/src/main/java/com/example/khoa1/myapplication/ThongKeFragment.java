@@ -9,7 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.khoa1.myapplication.Adapter.CategoryAdapter;
@@ -37,6 +40,7 @@ public class ThongKeFragment extends Fragment {
     SQLiteThuChi sqlthuchi;
     private ListView listChiTieu;
     ArrayList<ChiTieu> listchi;
+    Spinner spinner;
     private static String TAG = "ThongKeFragment";
     private ArrayList listarr = new ArrayList();
     PieChart pieChart;
@@ -49,15 +53,23 @@ public class ThongKeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_thongke, container, false);
         // final float[] yData = {25.3f, 10.6f, 66.76f, 44.32f, 46.01f, 16.89f, 23.9f};
         lvChitieu=(ListView) rootView.findViewById(R.id.listViewChiTieu);
-        sqlcategory = new SQLiteCategory(getContext());
-        sqlthuchi = new SQLiteThuChi(getContext());
-        list=sqlcategory.getListCategoryCount();
-
-        listchi = sqlthuchi.getListChiTieu();
-        ChiTieuAdapter chiTieuAdapter = new ChiTieuAdapter(getActivity(), R.layout.chitieu_listview, listchi);
-        lvChitieu.setAdapter(chiTieuAdapter);
-        Log.d(TAG, "onCreate: starting to create chart");
+        spinner = (Spinner) rootView.findViewById(R.id.spinner);
         pieChart = (PieChart) rootView.findViewById(R.id.idPieChart);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.spinner_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+//        sqlcategory = new SQLiteCategory(getContext());
+//        sqlthuchi = new SQLiteThuChi(getContext());
+//        list=sqlcategory.getListCategoryCount();
+//        listchi = sqlthuchi.getListChiTieu();
+//        ChiTieuAdapter chiTieuAdapter = new ChiTieuAdapter(getActivity(), R.layout.chitieu_listview, listchi);
+//        lvChitieu.setAdapter(chiTieuAdapter);
+        LoadGraph(spinner.getSelectedItem().toString());
+        Log.d(TAG, "onCreate: starting to create chart");
+
         pieChart.setDescription("Biểu đồ chi tiêu theo %");
         pieChart.setRotationEnabled(true);
         //pieChart.setUsePercentValues(true);
@@ -70,6 +82,20 @@ public class ThongKeFragment extends Fragment {
         //More options just check out the documentation!
 
         addDataSet();
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getActivity(), spinner.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
+                LoadGraph(spinner.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
@@ -95,6 +121,39 @@ public class ThongKeFragment extends Fragment {
     }
 
 
+    private void LoadGraph(String SearchBy){
+
+        sqlcategory = new SQLiteCategory(getContext());
+        sqlthuchi = new SQLiteThuChi(getContext());
+        list=sqlcategory.getListCategoryCount();
+        switch (SearchBy){
+            case "Tất cả":
+                listchi = sqlthuchi.getListChiTieu();
+                break;
+            case "Ngày":
+            case "Tháng":
+            case "Năm":
+        }
+
+
+        ChiTieuAdapter chiTieuAdapter = new ChiTieuAdapter(getActivity(), R.layout.chitieu_listview, listchi);
+        lvChitieu.setAdapter(chiTieuAdapter);
+
+        Log.d(TAG, "onCreate: starting to create chart");
+
+        pieChart.setDescription("Biểu đồ chi tiêu theo %");
+        pieChart.setRotationEnabled(true);
+        //pieChart.setUsePercentValues(true);
+        //pieChart.setHoleColor(Color.BLUE);
+        //pieChart.setCenterTextColor(Color.BLACK);
+        pieChart.setHoleRadius(25f);
+        pieChart.setTransparentCircleAlpha(0);
+        //pieChart.setDrawEntryLabels(true);
+        //pieChart.setEntryLabelTextSize(20);
+        //More options just check out the documentation!
+
+        addDataSet();
+    }
     private void addDataListView(){
         Log.d(TAG,"addDataListView started");
 
@@ -113,7 +172,7 @@ public class ThongKeFragment extends Fragment {
             yEntrys.add(new PieEntry(list.get(i).getTongTien()*100/Sum, i));
         }
         //create the data set
-        PieDataSet pieDataSet = new PieDataSet(yEntrys, "Employee Sales");
+        PieDataSet pieDataSet = new PieDataSet(yEntrys,"");
         pieDataSet.setSliceSpace(2);
         pieDataSet.setValueTextSize(12);
 
