@@ -33,7 +33,7 @@ public class SQLiteThuChi extends SQLiteDataController{
     SQLiteCategory sqLiteCategory;
     SQLiteDanhGia sqLiteDanhGia;
     Context context;
-    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
+    SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     public SQLiteThuChi(Context con)
     {
         super(con);
@@ -430,6 +430,32 @@ public class SQLiteThuChi extends SQLiteDataController{
 
             //  values.put("SoTienNo", account.getAccountType().getId());
             long rs = database.update("ChiTien", values, "MaChiTien=?",  new String[]{String.valueOf(chiTieu.getMaHoatDong())});
+            if (rs > 0) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        Log.d("aaa","finish");
+        return result;
+    }
+
+    public boolean updateThuNhap(ThuNhap thuNhap) {
+        boolean result = false;
+        try {
+            openDataBase();
+            ContentValues values = new ContentValues();
+            values.put("MaLoaiThuTien", thuNhap.getCategory().getMaLoai());
+            values.put("SoTienThu", thuNhap.getSoTien());
+            values.put("Ngay", df.format(thuNhap.getNgay()));
+            values.put("ChiTiet", thuNhap.getNoiDung());
+            values.put("TieuDe", thuNhap.getTieuDe());
+            values.put("MaTaiKhoan", thuNhap.getTaiKhoan().getMaTaiKhoan());
+
+            //  values.put("SoTienNo", account.getAccountType().getId());
+            long rs = database.update("ThuTien", values, "MaThuTien=?",  new String[]{String.valueOf(thuNhap.getMaHoatDong())});
             if (rs > 0) {
                 result = true;
             }

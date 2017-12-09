@@ -64,6 +64,7 @@ public class ThemHoatDong extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_hoat_dong);
+        setTitle("Thêm mới thu chi");
         //Set back toolbar button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -100,11 +101,9 @@ public class ThemHoatDong extends AppCompatActivity{
         }
         if(MaHoatDong!=-1)
         {
+            setTitle("Chỉnh sửa thu chi");
             getHoatDong();
         }
-        //Set back toolbar button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
     //Hàm set listener cho các thành phần
     private void setListernerForComponent()
@@ -248,9 +247,11 @@ public class ThemHoatDong extends AppCompatActivity{
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
         if(thuNhap)
         {
-            ThuNhap thuNhapRecord = new ThuNhap(0, soTien, myCalendar.getTime(), category, tieuDe, noiDung,TaiKhoan);
-
-            sqLiteThuChi.addThuNhap(thuNhapRecord);
+            ThuNhap thuNhapRecord = new ThuNhap(MaHoatDong, soTien, myCalendar.getTime(), category, tieuDe, noiDung,TaiKhoan);
+            if(MaHoatDong==-1)
+                sqLiteThuChi.addThuNhap(thuNhapRecord);
+            else
+                sqLiteThuChi.updateThuNhap(thuNhapRecord);
         }
         else
         {
@@ -332,8 +333,6 @@ public class ThemHoatDong extends AppCompatActivity{
                     if(imgFile.exists()){
 
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-
-
                         imgHinhAnh.setImageBitmap(myBitmap);
 
                     }

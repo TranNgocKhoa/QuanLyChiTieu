@@ -39,6 +39,7 @@ public class ChinhSuaTaiKhoan extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chinh_sua_tai_khoan);
+        setTitle("Tài khoản");
         //Enable Toolbar back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -69,8 +70,6 @@ public class ChinhSuaTaiKhoan extends AppCompatActivity {
         });
 
 
-
-
     }
 
     @Override
@@ -91,7 +90,7 @@ public class ChinhSuaTaiKhoan extends AppCompatActivity {
                 saveMenuClick();
                 this.finish();
                 return true;
-            case R.id.home:
+            case android.R.id.home:
                 this.finish();
                 return true;
         }

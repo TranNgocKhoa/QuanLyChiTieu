@@ -18,6 +18,8 @@ import com.example.khoa1.myapplication.Model.ChiTieu;
 import com.example.khoa1.myapplication.Model.HoatDong;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class ChiTietHoatDong extends AppCompatActivity {
 
@@ -28,16 +30,17 @@ public class ChiTietHoatDong extends AppCompatActivity {
     private TextView tvSoTien;
     private RatingBar ratingBar;
     private TextView tvNoiDung;
+    private TextView tvNgay;
     private boolean ThuNhap = true;
     private int MaHoatDong = -1;
     private HoatDong hoatDong;
     private SQLiteThuChi sqLiteThuChi;
+    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_hoat_dong);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         sqLiteThuChi = new SQLiteThuChi(this);
@@ -47,11 +50,13 @@ public class ChiTietHoatDong extends AppCompatActivity {
         if (MaHoatDong != -1) {
             ThuNhap = false;
             hoatDong = sqLiteThuChi.getChiTieuByID(MaHoatDong);
+            setTitle("Chi tiết chi tiêu");
         } else {
             MaHoatDong = intent.getIntExtra("Ma Thu Nhap", -1);
             if (MaHoatDong != -1) {
                 ThuNhap = true;
                 hoatDong = sqLiteThuChi.getThuNhapByID(MaHoatDong);
+                setTitle("Chi tiết thu nhập");
             }
         }
         initComponent();
@@ -66,6 +71,7 @@ public class ChiTietHoatDong extends AppCompatActivity {
         tvSoTien = (TextView) findViewById(R.id.tvSoTien);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         tvNoiDung = (TextView) findViewById(R.id.tvNoiDung);
+        tvNgay = (TextView) findViewById(R.id.tvngay);
     }
 
     private void SetInfoHoatDong() {
@@ -74,6 +80,7 @@ public class ChiTietHoatDong extends AppCompatActivity {
         imgCategoryHoatDong.setImageResource(hoatDong.getCategory().getImage());
         tvSoTien.setText(String.valueOf(hoatDong.getSoTien()));
         tvNoiDung.setText(hoatDong.getNoiDung());
+        tvNgay.setText(df.format(hoatDong.getNgay()));
         if (!ThuNhap) {
             ratingBar.setRating(((ChiTieu) hoatDong).getDanhGia().getRate());
             String pathImg = ((ChiTieu) hoatDong).getDanhGia().getHinhAnh();

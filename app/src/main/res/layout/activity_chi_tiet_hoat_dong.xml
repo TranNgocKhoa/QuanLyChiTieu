@@ -30,20 +30,30 @@
             android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="#1A237E"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@+id/tvngay"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
-            android:backgroundTint="#E3F2FD"
-            android:layout_marginLeft="10dp"/>
+            android:background="#A6E3F2FD"
+            android:paddingLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/tvngay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/linearLayout"
+            android:layout_alignParentStart="true"
+            android:background="#A6E3F2FD"
+            android:paddingLeft="10dp"
+            android:text="12/07/2017"
+            android:textColor="#1A237E"
+            android:textSize="20sp" />
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:backgroundTint="@color/colorSecondary"
             android:orientation="horizontal"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp">
-
+            android:background="#A6E3F2FD"
+            android:paddingLeft="10dp"
+            android:id="@+id/linearLayout">
             <TextView
                 android:id="@+id/tvCategory"
                 android:layout_width="wrap_content"
@@ -89,7 +99,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:numStars="5"
-            android:stepSize="0.5"
+            android:stepSize="1"
+            android:isIndicator="true"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
     <RelativeLayout

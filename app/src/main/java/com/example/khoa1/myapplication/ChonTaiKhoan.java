@@ -22,6 +22,7 @@ public class ChonTaiKhoan extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chon_tai_khoan);
+        setTitle("Chọn tài khoản");
         account = new SQLiteAccount(this);
         account = new SQLiteAccount(this);
         lvAccount = (ListView) findViewById(R.id.lv_Account);

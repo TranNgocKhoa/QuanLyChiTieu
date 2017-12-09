@@ -40,6 +40,10 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_tai_khoan);
+        setTitle("Chi tiết tài khoản");
+        //Set back toolbar button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         tvBalance = (TextView) findViewById(R.id.tvBalance);
         tvDebit = (TextView) findViewById(R.id.tvDebit);
         fabThemHoatDong = (FloatingActionButton) findViewById(R.id.fabThemHoatDong);
@@ -53,14 +57,7 @@ public class ChiTietTaiKhoan extends AppCompatActivity {
         account = sqLiteAccount.getAccountByID(MaTaiKhoan);
         tvBalance.setText(String.valueOf(account.getSoTienDu()));
         tvDebit.setText(String.valueOf(account.getSoTienNo()));
-        setTitle("Chi tiết tài khoản");
         lvThuChi = (ListView) findViewById(R.id.lvThuChi);
-//        lvChiTieu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//            }
-//        });
 
         handlerSetDataListview = new Handler()
         {

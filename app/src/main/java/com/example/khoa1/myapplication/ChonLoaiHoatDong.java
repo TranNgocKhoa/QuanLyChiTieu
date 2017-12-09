@@ -38,6 +38,7 @@ public class ChonLoaiHoatDong extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chon_loai_hoat_dong);
+        setTitle("Chọn loại chi tiêu");
         Log.d(TAG, "onCreate: Starting.");
         sqLiteCategory = new SQLiteCategory(this);
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
