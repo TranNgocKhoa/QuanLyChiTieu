@@ -33,7 +33,7 @@ public class SQLiteThuChi extends SQLiteDataController{
     SQLiteCategory sqLiteCategory;
     SQLiteDanhGia sqLiteDanhGia;
     Context context;
-    SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public SQLiteThuChi(Context con)
     {
         super(con);
@@ -122,6 +122,99 @@ public class SQLiteThuChi extends SQLiteDataController{
         return thuNhap;
     }
 
+    public ArrayList<ChiTieu> getListChiTieubyDay(){
+        ArrayList<ChiTieu> listChiTieu = new ArrayList<>();
+        try{
+            openDataBase();
+            Cursor cs = database.rawQuery("SELECT *\n" +
+                    "from ChiTien\n" +
+                    "where  strftime('%d',ChiTien.Ngay)=strftime('%d','now') and\n" +
+                    "strftime('%m',ChiTien.Ngay)=strftime('%m','now') and\n" +
+                    "strftime('%Y',ChiTien.Ngay)=strftime('%Y','now') ",null);
+            ChiTieu chiTieu;
+            Date date;
+            while (cs.moveToNext()) {
+                chiTieu = new ChiTieu(cs.getInt(0),
+                        cs.getDouble(2),
+                        df.parse(cs.getString(3)),
+                        sqLiteCategory.getCategoryChiTieuByID(cs.getInt(1)),
+                        cs.getString(5),cs.getString(4),
+                        sqLiteAccount.getAccountByID(cs.getInt(7)), null);
+                Log.d("aaa",cs.getString(0));
+                listChiTieu.add(chiTieu);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return listChiTieu;
+    }
+//    public ArrayList<ChiTieu> getListChiTieubyWeek(){
+//        ArrayList<ChiTieu> listChiTieu = new ArrayList<>();
+//        try{
+//            openDataBase();
+//            Cursor cs = database.rawQuery("SELECT *\n" +
+//                    "from ChiTien\n" +
+//                    "where  strftime('%d',ChiTien.Ngay)=strftime('%d','now') and\n" +
+//                    "\t\tstrftime('%m',ChiTien.Ngay)=strftime('%m','now') and\n" +
+//                    "\t\tstrftime('%Y',ChiTien.Ngay)=strftime('%Y','now') ",null);
+//            ChiTieu chiTieu;
+//            Date date;
+//            while (cs.moveToNext()) {
+//                chiTieu = new ChiTieu(cs.getInt(0),
+//                        cs.getDouble(2),
+//                        df.parse(cs.getString(3)),
+//                        sqLiteCategory.getCategoryChiTieuByID(cs.getInt(1)),
+//                        cs.getString(5),cs.getString(4),
+//                        sqLiteAccount.getAccountByID(cs.getInt(7)), null);
+//                Log.d("aaa",cs.getString(0));
+//                listChiTieu.add(chiTieu);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        } finally {
+//            close();
+//        }
+//
+//        return listChiTieu;
+//    }
+//    public ArrayList<ChiTieu> getListChiTieubyMonth(){
+//        ArrayList<ChiTieu> listChiTieu = new ArrayList<>();
+//        try{
+//            openDataBase();
+//            Cursor cs = database.rawQuery("SELECT *\n" +
+//                    "from ChiTien\n" +
+//                    "where  strftime('%d',ChiTien.Ngay)=strftime('%d','now') and\n" +
+//                    "\t\tstrftime('%m',ChiTien.Ngay)=strftime('%m','now') and\n" +
+//                    "\t\tstrftime('%Y',ChiTien.Ngay)=strftime('%Y','now') ",null);
+//            ChiTieu chiTieu;
+//            Date date;
+//            while (cs.moveToNext()) {
+//                chiTieu = new ChiTieu(cs.getInt(0),
+//                        cs.getDouble(2),
+//                        df.parse(cs.getString(3)),
+//                        sqLiteCategory.getCategoryChiTieuByID(cs.getInt(1)),
+//                        cs.getString(5),cs.getString(4),
+//                        sqLiteAccount.getAccountByID(cs.getInt(7)), null);
+//                Log.d("aaa",cs.getString(0));
+//                listChiTieu.add(chiTieu);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        } finally {
+//            close();
+//        }
+//
+//        return listChiTieu;
+//    }
     public ArrayList<ChiTieu> getListChiTieu(){
         ArrayList<ChiTieu> listChiTieu = new ArrayList<>();
         try{
@@ -335,6 +428,7 @@ public class SQLiteThuChi extends SQLiteDataController{
             ContentValues values = new ContentValues();
             values.put("MaLoaiChiTien", chiTieu.getCategory().getMaLoai());
             values.put("SoTienChi", chiTieu.getSoTien());
+            Log.d("Ngày",df.format(chiTieu.getNgay()));
             values.put("Ngay", df.format(chiTieu.getNgay()));
             values.put("ChiTiet", chiTieu.getNoiDung());
             values.put("TieuDe", chiTieu.getTieuDe());

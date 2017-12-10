@@ -53,6 +53,37 @@ public class SQLiteCategory extends SQLiteDataController {
         }
         return arrCategory;
     }
+    public ArrayList<CategoryCount> getListCategoryCountbyDay() {
+        ArrayList<CategoryCount> arrCategory = new ArrayList<>();
+
+        try {
+            openDataBase();
+            Cursor cs = database.rawQuery("SELECT LoaiChiTien.MaLoai," +
+                            "LoaiChiTien.TenLoai,LoaiChiTien.Image,Count(LoaiChiTien.TenLoai),Sum(ChiTien.SoTienChi)\n" +
+                            "FROM ChiTien,LoaiChiTien\n" +
+                            "Where ChiTien.MaLoaiChiTien=LoaiChiTien.MaLoai and\n"+
+                            "strftime('%m',ChiTien.Ngay)=strftime('%m','now') and\n" +
+                            "strftime('%Y',ChiTien.Ngay)=strftime('%Y','now') \n" +
+                            "GROUP BY LoaiChiTien.TenLoai", null);
+
+            while (cs.moveToNext()) {
+                int MaChiTien = cs.getInt(0);
+                String TenLoai = cs.getString(1);
+                int Image = cs.getInt(2);
+                int SoLuong= cs.getInt(3);
+                int TongTien= cs.getInt(4);
+                Log.d("Infor",TenLoai+' ' +Integer.toString(TongTien));
+                CategoryCount cat = new CategoryCount(MaChiTien, TenLoai, Image,SoLuong,TongTien);
+                arrCategory.add(cat);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return arrCategory;
+    }
     public ArrayList<Category> getListCategorybyLoaiChiTieu(String TenLoaiChiTieu) {
         ArrayList<Category> arrCategory = new ArrayList<>();
 

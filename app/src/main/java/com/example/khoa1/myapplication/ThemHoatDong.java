@@ -244,7 +244,7 @@ public class ThemHoatDong extends AppCompatActivity{
         double soTien = Double.parseDouble(edSoTien.getText().toString());
         String tieuDe = edTieuDe.getText().toString();
         String noiDung = edNoiDung.getText().toString();
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SS");
         if(thuNhap)
         {
             ThuNhap thuNhapRecord = new ThuNhap(MaHoatDong, soTien, myCalendar.getTime(), category, tieuDe, noiDung,TaiKhoan);

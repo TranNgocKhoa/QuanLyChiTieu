@@ -131,6 +131,7 @@ public class ThongKeFragment extends Fragment {
                 listchi = sqlthuchi.getListChiTieu();
                 break;
             case "Ngày":
+                listchi = sqlthuchi.getListChiTieubyDay();
             case "Tháng":
             case "Năm":
         }
