@@ -29,4 +29,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.android.support:design:27.0.0'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
+    compile 'com.google.android.gms:play-services-location:11.0.0'
+
 }

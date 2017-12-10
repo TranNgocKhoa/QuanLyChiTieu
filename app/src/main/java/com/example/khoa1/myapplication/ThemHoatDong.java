@@ -1,16 +1,25 @@
 package com.example.khoa1.myapplication;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
 import android.provider.ContactsContract;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +47,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class ThemHoatDong extends AppCompatActivity{
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
+public class ThemHoatDong extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView tvChonLoaiHoatDong;
     private TextView tvChonNgay;
@@ -50,7 +65,7 @@ public class ThemHoatDong extends AppCompatActivity{
     private ImageView imgChonLoaiHoatDong;
     private ImageButton imgButtonCamera;
     private ImageView imgHinhAnh;
-    private  Calendar myCalendar;
+    private Calendar myCalendar;
     private SQLiteThuChi sqLiteThuChi;
     private Account TaiKhoan;
     private Category category;
@@ -59,12 +74,20 @@ public class ThemHoatDong extends AppCompatActivity{
     private String imgPath;
     private boolean thuNhap = true;
     private int MaHoatDong;
+    private Location LastLocation;
+    private LocationManager locationManager;
+    private LocationListener listener;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_hoat_dong);
         setTitle("Thêm mới thu chi");
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         //Set back toolbar button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -72,9 +95,75 @@ public class ThemHoatDong extends AppCompatActivity{
         initComponent();
         setListernerForComponent();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (!checkPermissions()) {
+            requestPermissions();
+        } else {
+            getLastLocation();
+        }
+    }
+
+    private boolean checkPermissions() {
+        int permissionState = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION);
+        return permissionState == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermissions() {
+        boolean shouldProvideRationale =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        if (shouldProvideRationale) {
+            // Request permission
+                            startLocationPermissionRequest();
+        } else {
+            startLocationPermissionRequest();
+        }
+    }
+    private void startLocationPermissionRequest() {
+        ActivityCompat.requestPermissions(ThemHoatDong.this,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                REQUEST_PERMISSIONS_REQUEST_CODE);
+    }
+
+    @SuppressWarnings("MissingPermission")
+    private void getLastLocation() {
+        mFusedLocationClient.getLastLocation()
+                .addOnCompleteListener(this, new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(Task<Location> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            LastLocation = task.getResult();
+
+                        } else {
+                            Log.w("Error", "getLastLocation:exception", task.getException());
+                        }
+                    }
+                });
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                          int[] grantResults) {
+        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
+            if (grantResults.length <= 0) {
+                // If user interaction was interrupted, the permission request is cancelled and you
+                // receive empty arrays.
+                Log.i("Error", "User interaction was cancelled.");
+            } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted.
+                getLastLocation();
+            }
+        }
+    }
+
     //Hàm khỏi tạo các thành phần trong activity
-    private void initComponent()
-    {
+    private void initComponent() {
+
         myCalendar = Calendar.getInstance();
         myCalendar.setTime(myCalendar.getTime());
         tvChonLoaiHoatDong = (TextView) findViewById(R.id.tvChonLoaiHoatDong);
@@ -262,6 +351,7 @@ public class ThemHoatDong extends AppCompatActivity{
             else
                 sqLiteThuChi.updateChiTieu(chiTieuRecord);
 
+            Toast.makeText(this, String.valueOf(LastLocation.getLatitude()), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -273,8 +363,7 @@ public class ThemHoatDong extends AppCompatActivity{
             int maDanhgia =0;
             if(MaHoatDong!=-1)
             maDanhgia = sqLiteThuChi.getChiTieuByID(MaHoatDong).getDanhGia().getMaDanhGia();
-
-            danhGia = new DanhGia(maDanhgia, imgPath, 0.0f, 0.0f,(int) ratingBar.getRating());
+            danhGia = new DanhGia(maDanhgia, imgPath, (float) LastLocation.getLongitude(), (float) LastLocation.getLatitude(), (int) ratingBar.getRating());
         }
         return danhGia;
     }
